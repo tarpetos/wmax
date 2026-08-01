@@ -21,14 +21,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultUnitAlt = document.getElementById("result-unit-alt");
     const maxResultAlt = document.getElementById("max-result-alt");
 
+    const UNIT_MULTIPLIERS = {
+        "kg": 1.0,
+        "lbs": 2.20462262
+    };
+
+    const BASE_LIMITS = {
+        minWeight: 1,
+        maxWeight: 500
+    };
+
     let isCalculating = false;
 
     async function performCalculation() {
         const weight = parseFloat(weightInput.value);
         const reps = parseInt(repsInput.value);
         const mode = parseInt(modeSelect.value);
+        const unit = unitToggle ? unitToggle.getAttribute("data-unit") : "kg";
 
-        if (isNaN(weight) || weight <= 0 || weight > 500 || isNaN(reps) || reps <= 0 || reps > 100) {
+        const multiplier = UNIT_MULTIPLIERS[unit] || 1.0;
+        const minW = BASE_LIMITS.minWeight * multiplier;
+        const maxW = BASE_LIMITS.maxWeight * multiplier;
+
+        if (isNaN(weight) || weight < minW || weight > maxW || isNaN(reps) || reps <= 0 || reps > 100) {
             resultBox.classList.remove("show");
             return;
         }
@@ -37,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             isCalculating = true;
-            const unit = unitToggle ? unitToggle.getAttribute("data-unit") : "kg";
 
             const response = await fetch("/api/calculate", {
                 method: "POST",
@@ -160,6 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 resultUnitAlt.setAttribute("data-i18n", "unitKg");
                 resultUnitAlt.textContent = window.translations[currentLang].unitKg;
             }
+
+            const multiplier = UNIT_MULTIPLIERS[newUnit] || 1.0;
+            weightInput.min = (BASE_LIMITS.minWeight * multiplier).toFixed(newUnit === 'kg' ? 0 : 1);
+            weightInput.max = (BASE_LIMITS.maxWeight * multiplier).toFixed(newUnit === 'kg' ? 0 : 1);
             
             performCalculation();
         });

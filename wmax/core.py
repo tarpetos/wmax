@@ -7,13 +7,27 @@ RATES = [
 ]
 
 
+UNIT_MULTIPLIERS = {
+    "kg": 1.0,
+    "lbs": 2.20462262
+}
+BASE_MIN_WEIGHT = 1.0
+BASE_MAX_WEIGHT = 500.0
+
+def get_weight_limits(unit: str) -> tuple[float, float]:
+    """Returns dynamic min and max weights based on the unit."""
+    multiplier = UNIT_MULTIPLIERS.get(unit, 1.0)
+    return BASE_MIN_WEIGHT * multiplier, BASE_MAX_WEIGHT * multiplier
+
+
 def my_round(number: float, unit: str = "kg") -> float:
     """
     Rounds the number according to custom rules:
     - If >= 50kg (or 110lbs), rounds to the nearest 2.5.
     - If < 50kg, rounds to the nearest 1.
     """
-    threshold = 50.0 if unit == "kg" else 110.0
+    multiplier = UNIT_MULTIPLIERS.get(unit, 1.0)
+    threshold = 50.0 * multiplier
     if number >= threshold:
         return 2.5 * round(number / 2.5)
     return 1.0 * round(number / 1.0)
@@ -36,10 +50,13 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1, unit: str = "kg") -> 
         ValueError: If the input data is invalid.
     """
     logger.debug("1RM calculation started: weight={}, reps={}, mode={}, unit={}", weight, reps, mode, unit)
-    if weight < 1 or weight > 500:
-        raise ValueError("Weight must be between 1 and 500")
-    if unit not in ("kg", "lbs"):
-        raise ValueError("Unit must be kg or lbs")
+    if unit not in UNIT_MULTIPLIERS:
+        raise ValueError(f"Unit must be one of {list(UNIT_MULTIPLIERS.keys())}")
+        
+    min_weight, max_weight = get_weight_limits(unit)
+    if weight < min_weight or weight > max_weight:
+        raise ValueError(f"Weight must be between {min_weight:.1f} and {max_weight:.1f} {unit}")
+        
     if reps < 1 or reps > 100:
         logger.error("Invalid repetitions provided: {}", reps)
         raise ValueError("Reps must be between 1 and 100")

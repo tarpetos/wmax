@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class CalculateRequest(BaseModel):
@@ -11,10 +11,18 @@ class CalculateRequest(BaseModel):
         mode (int): Muscle fiber mode (0=Power, 1=Average, 2=Endurance).
     """
 
-    weight: float = Field(..., ge=1, le=500, description="Weight lifted")
+    weight: float = Field(..., description="Weight lifted")
     reps: int = Field(..., ge=1, le=100, description="Repetitions performed")
     mode: int = Field(1, ge=0, le=2, description="Mode: 0=Power, 1=Average, 2=Endurance")
     unit: str = Field("kg", description="Unit: kg or lbs")
+
+    @model_validator(mode="after")
+    def validate_weight(self) -> 'CalculateRequest':
+        from wmax.core import get_weight_limits
+        min_w, max_w = get_weight_limits(self.unit)
+        if self.weight < min_w or self.weight > max_w:
+            raise ValueError(f"Weight must be between {min_w:.1f} and {max_w:.1f} {self.unit}")
+        return self
 
 
 class CalculateResponse(BaseModel):
