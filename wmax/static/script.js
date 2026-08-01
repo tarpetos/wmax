@@ -122,8 +122,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const newUnit = currentUnit === "kg" ? "lbs" : "kg";
             
             unitToggle.setAttribute("data-unit", newUnit);
-            unitToggle.textContent = newUnit;
-            unitToggle.setAttribute("data-i18n", newUnit === "kg" ? "unitKg" : "unitLbs");
+            const i18nKey = newUnit === "kg" ? "unitKg" : "unitLbs";
+            unitToggle.setAttribute("data-i18n", i18nKey);
+            unitToggle.textContent = window.translations[currentLang][i18nKey];
             
             if (newUnit === "kg") {
                 resultUnitMain.setAttribute("data-i18n", "unitKg");
@@ -296,4 +297,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     initLanguage();
+    performCalculation();
 });
