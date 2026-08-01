@@ -26,9 +26,10 @@ def is_port_in_use(host: str, port: int) -> bool:
         s.settimeout(1)
         try:
             s.connect((host, port))
-            return True
         except (ConnectionRefusedError, OSError):
             return False
+        else:
+            return True
 
 try:
     import pystray
