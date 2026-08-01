@@ -31,6 +31,7 @@ def is_port_in_use(host: str, port: int) -> bool:
         else:
             return True
 
+
 try:
     import pystray
 
