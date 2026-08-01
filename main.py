@@ -38,7 +38,7 @@ def main() -> None:
         time.sleep(1.5)
         webbrowser.open(f"http://{args.host}:{args.port}")
 
-    def exit_app(icon, _item) -> None:
+    def exit_app(icon, _item) -> None:  # noqa: ANN001
         if icon:
             icon.stop()
         os._exit(0)
