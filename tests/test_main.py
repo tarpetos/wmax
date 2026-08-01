@@ -19,8 +19,8 @@ def test_main_pyinstaller_path() -> None:
 
 
 def test_main_run() -> None:
-    with patch("wmax.main.uvicorn.run") as mock_run:
+    with patch("wmax.main.uvicorn.run") as mock_run, patch("sys.argv", ["wmax"]):
         import wmax.main
 
         wmax.main.main()
-        mock_run.assert_called_once()
+        mock_run.assert_called_once_with(wmax.main.app, host="127.0.0.1", port=8372)

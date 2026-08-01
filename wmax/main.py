@@ -1,3 +1,4 @@
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -42,9 +43,13 @@ def main() -> None:
     """
     Starts the Uvicorn web server for the application.
     """
-    port = 8372
-    logger.info("Server starting on http://127.0.0.1:%d", port)
-    uvicorn.run(app, host="127.0.0.1", port=port)
+    parser = argparse.ArgumentParser(description="WMAX - One Rep Max Calculator")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Host IP to bind the server to")
+    parser.add_argument("--port", type=int, default=8372, help="Port to bind the server to")
+    args = parser.parse_args()
+
+    logger.info("Server starting on http://%s:%d", args.host, args.port)
+    uvicorn.run(app, host=args.host, port=args.port)
 
 
 if __name__ == "__main__":
