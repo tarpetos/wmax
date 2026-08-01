@@ -245,9 +245,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update button UI
         const activeLi = langDropdown.querySelector(`li[data-lang="${detectedLang}"]`);
         if (activeLi) {
-            const text = activeLi.textContent.trim();
-            const flag = text.split(' ')[0];
-            langFlagSpan.textContent = flag;
+            const flagSpan = activeLi.querySelector('.fi');
+            if (flagSpan) {
+                document.getElementById('lang-flag').className = flagSpan.className;
+            }
             langCodeSpan.textContent = detectedLang.toUpperCase();
         }
 
@@ -266,9 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
         langDropdown.querySelectorAll('li').forEach(li => {
             li.addEventListener('click', () => {
                 const lang = li.getAttribute('data-lang');
-                const text = li.textContent.trim();
-                const flag = text.split(' ')[0];
-                langFlagSpan.textContent = flag;
+                const flagSpan = li.querySelector('.fi');
+                if (flagSpan) {
+                    document.getElementById('lang-flag').className = flagSpan.className;
+                }
                 langCodeSpan.textContent = lang.toUpperCase();
                 langDropdown.classList.remove('show');
                 setLanguage(lang);

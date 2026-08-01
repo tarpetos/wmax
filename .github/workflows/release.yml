@@ -61,6 +61,7 @@ jobs:
         run: >
           uv run pyinstaller --name ${{ matrix.executable_name }}
           --onefile
+          --icon=icon.ico
           --add-data "wmax/static${{ matrix.separator }}static"
           main.py
       - name: Upload artifact
