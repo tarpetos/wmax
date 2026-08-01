@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from wmax.main import app
+from wmax.app import app
 
 client = TestClient(app)
 

@@ -24,11 +24,11 @@ The project uses `uv` for lightning-fast dependency management.
    ```
 3. **Run the server**:
    ```bash
-   uv run python -m wmax.main
+   uv run python main.py
    ```
    You can optionally specify a custom host and port:
    ```bash
-   uv run python -m wmax.main --host 0.0.0.0 --port 9000
+   uv run python main.py --host 0.0.0.0 --port 9000
    ```
 4. **Visit**: `http://127.0.0.1:8372`
 

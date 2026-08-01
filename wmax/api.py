@@ -1,11 +1,9 @@
-import logging
-
 from fastapi import APIRouter, HTTPException
+from loguru import logger
 
 from wmax.core import calculate_1rm
 from wmax.models import CalculateRequest, CalculateResponse
 
-logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api")
 
 
@@ -23,10 +21,10 @@ def calculate(request: CalculateRequest) -> CalculateResponse:
     Raises:
         HTTPException: If the calculation data is invalid.
     """
-    logger.info("Received request for 1RM calculation: %s", request)
+    logger.info("Received request for 1RM calculation: {}", request)
     try:
         maximum = calculate_1rm(weight=request.weight, reps=request.reps, mode=request.mode)
-        logger.info("Successfully calculated result: %s", maximum)
+        logger.info("Successfully calculated result: {}", maximum)
         return CalculateResponse(
             maximum=maximum,
             weight=request.weight,
@@ -34,5 +32,5 @@ def calculate(request: CalculateRequest) -> CalculateResponse:
             mode=request.mode,
         )
     except ValueError as e:
-        logger.warning("Data validation error: %s", e)
+        logger.warning("Data validation error: {}", e)
         raise HTTPException(status_code=400, detail=str(e)) from e
