@@ -1,6 +1,6 @@
 [project]
 name = "wmax"
-version = "0.2.3"
+version = "0.2.4"
 description = "One Rep Max (1RM) calculator with a glassmorphism web UI"
 readme = "README.md"
 authors = [{ name = "tarpetos", email = "hevlichtaras@gmail.com" }]
