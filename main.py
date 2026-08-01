@@ -63,7 +63,6 @@ def main() -> None:
     def exit_app(icon, _item) -> None:  # noqa: ANN001
         if icon:
             icon.stop()
-        os._exit(0)
 
     if can_use_tray(args.server_mode):
         server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, log_config=None))
@@ -88,7 +87,8 @@ def main() -> None:
             icon.run()
         except Exception as e:
             logger.error("Tray icon failed: {}", e)
-            os._exit(1)
+        finally:
+            os._exit(0)
     else:
         # In server mode or headless linux, we just run the server and DO NOT open a browser
         uvicorn_config = uvicorn.Config(app, host=args.host, port=args.port, log_config=None, access_log=False)
