@@ -1,4 +1,7 @@
+import asyncio
 import sys
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -8,7 +11,14 @@ from loguru import logger
 
 from wmax.api import router
 
-app = FastAPI(title="Weight Max Calculator")
+
+@asynccontextmanager
+async def lifespan_handler(_app: FastAPI) -> AsyncGenerator[None]:
+    with suppress(asyncio.CancelledError, KeyboardInterrupt):
+        yield
+
+
+app = FastAPI(title="Weight Max Calculator", lifespan=lifespan_handler)
 app.include_router(router)
 
 if getattr(sys, "frozen", False):
