@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: uv sync
       - name: Run tests
-        run: uv run pytest --cov=wmax
+        run: uv run pytest
       - name: Run ruff
         run: uv run ruff check .
 
