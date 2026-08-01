@@ -1,0 +1,79 @@
+[project]
+name = "wmax"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [{ name = "tarpetos", email = "hevlichtaras@gmail.com" }]
+requires-python = ">=3.13, <3.14"
+dependencies = [
+]
+
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "ruff==0.16.1",
+    "pyinstaller==6.21.0"
+]
+
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "tests",
+]
+builtins = ["_"]
+
+[tool.ruff.lint]
+ignore = [
+    "ANN002", "ANN003", "ANN204",
+    "BLE001",
+    "COM812",
+    "D100", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D205", "D212", "D401",
+    "DTZ005",
+    "EM101", "EM102",
+    "G004",
+    "FBT001", "FBT002", "FBT003",
+    "FIX001", "FIX002",
+    "N802",
+    "PLR2004",
+    "S101", "S311",
+    "TD001", "TD002", "TD003", "TD004", "TD005",
+    "TRY002", "TRY003", "TRY400",
+]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+
+[tool.ruff.format]
+quote-style = "double"
