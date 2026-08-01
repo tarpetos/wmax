@@ -31,7 +31,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="WMAX - One Rep Max Calculator")
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Host IP to bind the server to")
     parser.add_argument("--port", type=int, default=8372, help="Port to bind the server to")
+    parser.add_argument("--server-mode", action="store_true", help="Run in server mode (hides exit button and disables tray)")
     args = parser.parse_args()
+
+    if args.server_mode:
+        os.environ["WMAX_SERVER_MODE"] = "1"
 
     logger.info("Server starting on http://{}:{}", args.host, args.port)
 
@@ -44,7 +48,7 @@ def main() -> None:
             icon.stop()
         os._exit(0)
 
-    if HAS_PYSTRAY:
+    if HAS_PYSTRAY and not args.server_mode:
         server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, log_config=None))
         threading.Thread(target=server.run, daemon=True).start()
         threading.Thread(target=open_browser, daemon=True).start()

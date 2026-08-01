@@ -11,12 +11,23 @@ from wmax.models import CalculateRequest, CalculateResponse
 router = APIRouter(prefix="/api")
 
 
+@router.get("/config")
+def get_config() -> dict[str, bool]:
+    """
+    Returns public configuration for the UI.
+    """
+    return {"server_mode": os.environ.get("WMAX_SERVER_MODE") == "1"}
+
+
 @router.post("/quit")
 def quit_app() -> dict[str, str]:
     """
-    Terminates the application gracefully.
+    Gracefully shuts down the web server and the application.
     """
-    logger.info("Shutdown requested via API")
+    if os.environ.get("WMAX_SERVER_MODE") == "1":
+        raise HTTPException(status_code=403, detail="Quit is disabled in server mode")
+
+    logger.info("Shutdown requested via API...")
 
     def exit_delay() -> None:
         time.sleep(0.5)

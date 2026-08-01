@@ -114,6 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const exitServerBtn = document.getElementById("exit-server-btn");
     if (exitServerBtn) {
+        fetch("/api/config")
+            .then(res => res.json())
+            .then(config => {
+                if (config.server_mode) {
+                    exitServerBtn.style.display = "none";
+                }
+            })
+            .catch(e => console.error("Could not load config", e));
+
         exitServerBtn.addEventListener("click", async () => {
             if (confirm("Are you sure you want to stop the server and exit the application?")) {
                 try {
