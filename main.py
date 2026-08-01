@@ -47,8 +47,12 @@ def main() -> None:
 
     if args.server_mode:
         os.environ["WMAX_SERVER_MODE"] = "1"
+        logger.remove()
+        sys.stdout = open(os.devnull, "w")  # noqa: SIM115
+        sys.stderr = open(os.devnull, "w")  # noqa: SIM115
 
-    logger.info("Server starting on http://{}:{}", args.host, args.port)
+    if not args.server_mode:
+        logger.info("Server starting on http://{}:{}", args.host, args.port)
 
     def open_browser() -> None:
         time.sleep(1.5)
@@ -80,7 +84,11 @@ def main() -> None:
         icon.run()
     else:
         threading.Thread(target=open_browser, daemon=True).start()
-        uvicorn.run(app, host=args.host, port=args.port)
+        uvicorn_config = uvicorn.Config(
+            app, host=args.host, port=args.port, log_config=None, log_level="critical", access_log=False
+        )
+        server = uvicorn.Server(uvicorn_config)
+        server.run()
 
 
 if __name__ == "__main__":
