@@ -1,6 +1,7 @@
 import argparse
 import os
 import signal
+import socket
 import sys
 import threading
 import time
@@ -17,6 +18,17 @@ from loguru import logger
 from PIL import Image
 
 from wmax.app import app, static_dir
+
+
+def is_port_in_use(host: str, port: int) -> bool:
+    """Check if a port is already in use."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.settimeout(1)
+        try:
+            s.connect((host, port))
+            return True
+        except (ConnectionRefusedError, OSError):
+            return False
 
 try:
     import pystray
@@ -53,6 +65,11 @@ def main() -> None:
 
     if args.server_mode:
         os.environ["WMAX_SERVER_MODE"] = "1"
+
+    if is_port_in_use(args.host, args.port):
+        logger.info("WMAX is already running on http://{}:{}, opening browser...", args.host, args.port)
+        webbrowser.open(f"http://{args.host}:{args.port}")
+        return
 
     logger.info("Server starting on http://{}:{}", args.host, args.port)
 
