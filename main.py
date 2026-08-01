@@ -31,7 +31,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="WMAX - One Rep Max Calculator")
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Host IP to bind the server to")
     parser.add_argument("--port", type=int, default=8372, help="Port to bind the server to")
-    parser.add_argument("--server-mode", action="store_true", help="Run in server mode (hides exit button and disables tray)")
+    parser.add_argument(
+        "--server-mode", action="store_true", help="Run in server mode (hides exit button and disables tray)"
+    )
     args = parser.parse_args()
 
     if args.server_mode:
