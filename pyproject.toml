@@ -6,6 +6,9 @@ readme = "README.md"
 authors = [{ name = "tarpetos", email = "hevlichtaras@gmail.com" }]
 requires-python = ">=3.13, <3.14"
 dependencies = [
+    "fastapi>=0.141.1",
+    "pydantic>=2.13.4",
+    "uvicorn>=0.52.0",
 ]
 
 
@@ -14,7 +17,8 @@ dev = [
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
     "ruff==0.16.1",
-    "pyinstaller==6.21.0"
+    "pyinstaller==6.21.0",
+    "httpx>=0.28.1",
 ]
 
 
@@ -55,7 +59,8 @@ ignore = [
     "ANN002", "ANN003", "ANN204",
     "BLE001",
     "COM812",
-    "D100", "D101", "D102", "D103", "D104", "D105", "D107", "D203", "D205", "D212", "D401",
+    "CPY001", "PTH", "T201", "SLF001", "SIM108", "FAST001",
+    "D",
     "DTZ005",
     "EM101", "EM102",
     "G004",
