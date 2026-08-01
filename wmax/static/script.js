@@ -246,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const activeLi = langDropdown.querySelector(`li[data-lang="${detectedLang}"]`);
         if (activeLi) {
             const text = activeLi.textContent.trim();
-            const flag = text.substring(0, 2);
+            const flag = text.split(' ')[0];
             langFlagSpan.textContent = flag;
             langCodeSpan.textContent = detectedLang.toUpperCase();
         }
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
             li.addEventListener('click', () => {
                 const lang = li.getAttribute('data-lang');
                 const text = li.textContent.trim();
-                const flag = text.substring(0, 2);
+                const flag = text.split(' ')[0];
                 langFlagSpan.textContent = flag;
                 langCodeSpan.textContent = lang.toUpperCase();
                 langDropdown.classList.remove('show');
