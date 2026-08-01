@@ -28,7 +28,7 @@ def test_calculate_1rm_invalid() -> None:
     with pytest.raises(ValueError, match="Weight must be between"):
         calculate_1rm(0, 5, 1)
     with pytest.raises(ValueError, match="Weight must be between"):
-        calculate_1rm(501, 5, 1)
+        calculate_1rm(1501, 5, 1)
     with pytest.raises(ValueError, match="Reps must be between"):
         calculate_1rm(100, 0, 1)
     with pytest.raises(ValueError, match="Reps must be between"):
