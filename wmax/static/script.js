@@ -96,4 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     modeSelect.addEventListener("change", autoCalc);
+
+    const toggleTableBtn = document.getElementById("toggle-table-btn");
+    const tableContainer = document.getElementById("reference-table-container");
+
+    if (toggleTableBtn && tableContainer) {
+        toggleTableBtn.addEventListener("click", () => {
+            tableContainer.classList.toggle("show");
+            if (tableContainer.classList.contains("show")) {
+                toggleTableBtn.querySelector("span").textContent = "Hide Reference Table";
+            } else {
+                toggleTableBtn.querySelector("span").textContent = "View Reference Table";
+            }
+        });
+    }
 });

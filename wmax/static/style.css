@@ -324,6 +324,80 @@ select option {
     75% { transform: translateX(5px); }
 }
 
+/* Reference Table styles */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.table-container {
+    margin-top: 15px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.table-container.show {
+    max-height: 600px;
+    opacity: 1;
+}
+
+.glass-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+.glass-table th, .glass-table td {
+    padding: 8px 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.glass-table td {
+    color: var(--text-secondary);
+}
+
+.glass-table th[colspan="3"] {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.glass-table th:first-child, .glass-table td:first-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
 /* Responsive Design */
 @media screen and (max-width: 480px) {
     .app-container {
