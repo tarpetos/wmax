@@ -80,9 +80,7 @@ def main() -> None:
         icon.run()
     else:
         # In server mode or headless linux, we just run the server and DO NOT open a browser
-        uvicorn_config = uvicorn.Config(
-            app, host=args.host, port=args.port, log_config=None, access_log=False
-        )
+        uvicorn_config = uvicorn.Config(app, host=args.host, port=args.port, log_config=None, access_log=False)
         server = uvicorn.Server(uvicorn_config)
         server.run()
 
