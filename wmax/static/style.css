@@ -82,42 +82,22 @@ body {
     100% { transform: translate(50px, 50px) scale(1.2); }
 }
 
-/* Layout Wrapper */
-.layout-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    align-items: flex-start;
-    justify-content: center;
-    width: 90%;
-    max-width: 1100px;
-    z-index: 10;
-}
-
 /* Glassmorphism App Container */
-.app-container, .table-card {
+.app-container {
     background: var(--bg-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border-glass);
     border-radius: 24px;
     padding: 40px;
+    width: 100%;
+    max-width: 520px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    z-index: 10;
     transition: transform 0.3s ease;
 }
 
-.app-container {
-    flex: 1;
-    max-width: 420px;
-}
-
-.table-card {
-    flex: 1;
-    max-width: 600px;
-    padding: 30px;
-}
-
-.app-container:hover, .table-card:hover {
+.app-container:hover {
     transform: translateY(-5px);
 }
 
@@ -344,14 +324,37 @@ select option {
 }
 
 /* Reference Table styles */
-.table-title {
-    font-size: 20px;
-    font-weight: 800;
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
     margin-bottom: 20px;
-    text-align: center;
-    background: linear-gradient(to right, #fff, #a5b4fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.table-container {
+    margin-bottom: 25px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.table-container.show {
+    max-height: 600px;
+    opacity: 1;
 }
 
 .glass-table {
@@ -410,28 +413,10 @@ select option {
 }
 
 /* Responsive Design */
-@media screen and (max-width: 900px) {
-    .layout-wrapper {
-        flex-direction: column-reverse;
-        align-items: center;
-        gap: 25px;
-        width: 95%;
-        padding: 20px 0;
-        /* Ensure container allows scrolling on small screens if height exceeds viewport */
-        height: auto;
-    }
-    
-    body {
-        height: auto;
-        min-height: 100vh;
-        overflow-y: auto;
-        align-items: flex-start;
-    }
-
-    .app-container, .table-card {
+@media screen and (max-width: 600px) {
+    .app-container {
         padding: 24px 20px;
-        width: 100%;
-        max-width: 480px;
+        width: 95%;
         border-radius: 16px;
     }
     

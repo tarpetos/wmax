@@ -126,6 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tbody) {
             const targetRow = tbody.rows[rowIndex];
             if (targetRow) {
+                // Highlight % of 1RM column
+                const percentCell = targetRow.cells[0];
+                if (percentCell) {
+                    percentCell.classList.add('highlight-cell');
+                }
+                
                 // Column 0 is %, Column 1 is Power, Column 2 is Average, Column 3 is Endurance
                 const targetCell = targetRow.cells[mode + 1];
                 if (targetCell) {
@@ -133,6 +139,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
+    }
+
+    const toggleTableBtn = document.getElementById("toggle-table-btn");
+    const tableContainer = document.getElementById("reference-table-container");
+
+    if (toggleTableBtn && tableContainer) {
+        toggleTableBtn.addEventListener("click", () => {
+            tableContainer.classList.toggle("show");
+            if (tableContainer.classList.contains("show")) {
+                toggleTableBtn.querySelector("span").textContent = "Hide Reference Table";
+            } else {
+                toggleTableBtn.querySelector("span").textContent = "View Reference Table";
+            }
+        });
     }
 
     // Add listener to inputs to live update highlighting

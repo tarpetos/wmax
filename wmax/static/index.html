@@ -16,8 +16,7 @@
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
-    <div class="layout-wrapper">
-        <main class="app-container">
+    <main class="app-container">
         <header class="app-header">
             <div class="logo">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -31,6 +30,39 @@
             <h1>WMAX</h1>
             <p>One Rep Max Calculator</p>
         </header>
+
+        <button type="button" class="btn-secondary" id="toggle-table-btn" style="margin-bottom: 20px;">
+            <span>View Reference Table</span>
+        </button>
+
+        <div id="reference-table-container" class="table-container">
+            <table class="glass-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">% of 1RM</th>
+                        <th colspan="3">Muscle Fiber Ratio</th>
+                    </tr>
+                    <tr>
+                        <th id="th-mode-0">Power</th>
+                        <th id="th-mode-1">Average</th>
+                        <th id="th-mode-2">Endurance</th>
+                    </tr>
+                </thead>
+                <tbody id="rates-tbody">
+                    <tr><td>50%</td><td>30 - 37</td><td>38 - 49</td><td>50 - 50+</td></tr>
+                    <tr><td>55%</td><td>26 - 29</td><td>30 - 37</td><td>38 - 49</td></tr>
+                    <tr><td>60%</td><td>18 - 25</td><td>26 - 29</td><td>30 - 37</td></tr>
+                    <tr><td>65%</td><td>12 - 17</td><td>18 - 25</td><td>26 - 29</td></tr>
+                    <tr><td>70%</td><td>10 - 11</td><td>12 - 17</td><td>18 - 25</td></tr>
+                    <tr><td>75%</td><td>8 - 9</td><td>10 - 11</td><td>12 - 17</td></tr>
+                    <tr><td>80%</td><td>6 - 7</td><td>8 - 9</td><td>10 - 11</td></tr>
+                    <tr><td>85%</td><td>4 - 5</td><td>6 - 7</td><td>8 - 9</td></tr>
+                    <tr><td>90%</td><td>2 - 3</td><td>4 - 5</td><td>4 - 7</td></tr>
+                    <tr><td>95%</td><td>1 - 2</td><td>2 - 3</td><td>2 - 3</td></tr>
+                    <tr><td>100%</td><td>1</td><td>1</td><td>1</td></tr>
+                </tbody>
+            </table>
+        </div>
 
         <form id="calc-form" class="calc-form">
             <div class="input-group">
@@ -74,38 +106,7 @@
             </div>
         </div>
         <div id="error-box" class="error-box"></div>
-        </main>
-
-        <aside class="table-card">
-            <h2 class="table-title">Reference Ranges</h2>
-            <table class="glass-table">
-                <thead>
-                    <tr>
-                        <th rowspan="2">% of 1RM</th>
-                        <th colspan="3">Muscle Fiber Ratio</th>
-                    </tr>
-                    <tr>
-                        <th id="th-mode-0">Power</th>
-                        <th id="th-mode-1">Average</th>
-                        <th id="th-mode-2">Endurance</th>
-                    </tr>
-                </thead>
-                <tbody id="rates-tbody">
-                    <tr><td>50%</td><td>30 - 37</td><td>38 - 49</td><td>50 - 50+</td></tr>
-                    <tr><td>55%</td><td>26 - 29</td><td>30 - 37</td><td>38 - 49</td></tr>
-                    <tr><td>60%</td><td>18 - 25</td><td>26 - 29</td><td>30 - 37</td></tr>
-                    <tr><td>65%</td><td>12 - 17</td><td>18 - 25</td><td>26 - 29</td></tr>
-                    <tr><td>70%</td><td>10 - 11</td><td>12 - 17</td><td>18 - 25</td></tr>
-                    <tr><td>75%</td><td>8 - 9</td><td>10 - 11</td><td>12 - 17</td></tr>
-                    <tr><td>80%</td><td>6 - 7</td><td>8 - 9</td><td>10 - 11</td></tr>
-                    <tr><td>85%</td><td>4 - 5</td><td>6 - 7</td><td>8 - 9</td></tr>
-                    <tr><td>90%</td><td>2 - 3</td><td>4 - 5</td><td>4 - 7</td></tr>
-                    <tr><td>95%</td><td>1 - 2</td><td>2 - 3</td><td>2 - 3</td></tr>
-                    <tr><td>100%</td><td>1</td><td>1</td><td>1</td></tr>
-                </tbody>
-            </table>
-        </aside>
-    </div>
+    </main>
 
     <script src="/static/script.js"></script>
 </body>
