@@ -24,9 +24,21 @@ def calculate(request: CalculateRequest) -> CalculateResponse:
     logger.info("Received request for 1RM calculation: {}", request)
     try:
         maximum = calculate_1rm(weight=request.weight, reps=request.reps, mode=request.mode, unit=request.unit)
-        logger.info("Successfully calculated result: {}", maximum)
+
+        # Calculate alternative unit
+        if request.unit == "kg":
+            alt_unit = "lbs"
+            alt_weight = request.weight * 2.20462262
+        else:
+            alt_unit = "kg"
+            alt_weight = request.weight / 2.20462262
+
+        maximum_alt = calculate_1rm(weight=alt_weight, reps=request.reps, mode=request.mode, unit=alt_unit)
+
+        logger.info("Successfully calculated result: {} {}, {} {}", maximum, request.unit, maximum_alt, alt_unit)
         return CalculateResponse(
             maximum=maximum,
+            maximum_alt=maximum_alt,
             weight=request.weight,
             reps=request.reps,
             mode=request.mode,

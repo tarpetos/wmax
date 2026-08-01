@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const weightInput = document.getElementById("weight");
     const repsInput = document.getElementById("reps");
     const modeSelect = document.getElementById("mode");
-    const btn = document.getElementById("calc-btn");
     const resultBox = document.getElementById("result-box");
     const maxResult = document.getElementById("max-result");
     const errorBox = document.getElementById("error-box");
@@ -17,32 +16,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 5000);
     }
 
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        
+    const unitToggle = document.getElementById("unit-toggle");
+    const resultUnitMain = document.getElementById("result-unit-main");
+    const resultUnitAlt = document.getElementById("result-unit-alt");
+    const maxResultAlt = document.getElementById("max-result-alt");
+
+    let isCalculating = false;
+
+    async function performCalculation() {
         const weight = parseFloat(weightInput.value);
         const reps = parseInt(repsInput.value);
         const mode = parseInt(modeSelect.value);
 
-        if (isNaN(weight) || weight <= 0 || weight > 500) {
-            const t = window.translations[currentLang];
-            showError(t.errWeight);
-            return;
-        }
-        if (isNaN(reps) || reps <= 0 || reps > 100) {
-            const t = window.translations[currentLang];
-            showError(t.errReps);
+        if (isNaN(weight) || weight <= 0 || weight > 1500 || isNaN(reps) || reps <= 0 || reps > 100) {
+            resultBox.classList.remove("show");
             return;
         }
 
-        btn.classList.add("loading");
-        const t = window.translations[currentLang];
-        btn.querySelector("span").textContent = t.calculating;
         errorBox.classList.remove("show");
 
         try {
-            const unitSelect = document.getElementById("weight-unit");
-            const unit = unitSelect ? unitSelect.value : "kg";
+            isCalculating = true;
+            const unit = unitToggle ? unitToggle.getAttribute("data-unit") : "kg";
 
             const response = await fetch("/api/calculate", {
                 method: "POST",
@@ -61,7 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Animate number
             let start = 0;
+            let startAlt = 0;
             const end = data.maximum;
+            const endAlt = data.maximum_alt;
             const duration = 600;
             const startTime = performance.now();
 
@@ -75,18 +72,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 
                 const currentVal = start + (end - start) * easeOut;
-                const hasDecimal = end % 1 !== 0;
+                const currentValAlt = startAlt + (endAlt - startAlt) * easeOut;
                 
-                if (hasDecimal) {
-                    maxResult.textContent = currentVal.toFixed(1);
-                } else {
-                    maxResult.textContent = Math.round(currentVal);
-                }
+                const hasDecimal = end % 1 !== 0;
+                const hasDecimalAlt = endAlt % 1 !== 0;
+                
+                maxResult.textContent = hasDecimal ? currentVal.toFixed(1) : Math.round(currentVal);
+                maxResultAlt.textContent = hasDecimalAlt ? currentValAlt.toFixed(1) : Math.round(currentValAlt);
 
                 if (progress < 1) {
                     requestAnimationFrame(updateNumber);
                 } else {
                     maxResult.textContent = hasDecimal ? end.toFixed(1) : end;
+                    maxResultAlt.textContent = hasDecimalAlt ? endAlt.toFixed(1) : endAlt;
                 }
             }
 
@@ -95,34 +93,51 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             showError(err.message);
         } finally {
-            btn.classList.remove("loading");
-            const t = window.translations[currentLang];
-            btn.querySelector("span").textContent = t.calcBtn;
+            isCalculating = false;
         }
-    });
+    }
 
-    // Auto calculate on input change if valid
-    const autoCalc = () => {
-        if (weightInput.value && repsInput.value) {
-            form.dispatchEvent(new Event("submit", { cancelable: true }));
-        }
-    };
+    // Debounce function
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
 
-    modeSelect.addEventListener("change", autoCalc);
+    const autoCalc = debounce(performCalculation, 300);
+
+    weightInput.addEventListener("input", autoCalc);
+    repsInput.addEventListener("input", autoCalc);
+    modeSelect.addEventListener("change", performCalculation);
     
-    const unitSelect = document.getElementById("weight-unit");
-    const resultUnit = document.querySelector(".result-unit");
-    
-    if (unitSelect) {
-        unitSelect.addEventListener("change", () => {
-            if (unitSelect.value === "kg") {
-                resultUnit.setAttribute("data-i18n", "unitKg");
-                resultUnit.textContent = window.translations[currentLang].unitKg;
+    if (unitToggle) {
+        unitToggle.addEventListener("click", () => {
+            const currentUnit = unitToggle.getAttribute("data-unit");
+            const newUnit = currentUnit === "kg" ? "lbs" : "kg";
+            
+            unitToggle.setAttribute("data-unit", newUnit);
+            unitToggle.textContent = newUnit;
+            unitToggle.setAttribute("data-i18n", newUnit === "kg" ? "unitKg" : "unitLbs");
+            
+            if (newUnit === "kg") {
+                resultUnitMain.setAttribute("data-i18n", "unitKg");
+                resultUnitMain.textContent = window.translations[currentLang].unitKg;
+                resultUnitAlt.setAttribute("data-i18n", "unitLbs");
+                resultUnitAlt.textContent = window.translations[currentLang].unitLbs;
             } else {
-                resultUnit.setAttribute("data-i18n", "unitLbs");
-                resultUnit.textContent = window.translations[currentLang].unitLbs;
+                resultUnitMain.setAttribute("data-i18n", "unitLbs");
+                resultUnitMain.textContent = window.translations[currentLang].unitLbs;
+                resultUnitAlt.setAttribute("data-i18n", "unitKg");
+                resultUnitAlt.textContent = window.translations[currentLang].unitKg;
             }
-            autoCalc();
+            
+            performCalculation();
         });
     }
 
@@ -224,15 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // Update calc button contextually if loading
-        if (btn) {
-            const calcSpan = btn.querySelector('span');
-            if (btn.classList.contains('loading')) {
-                calcSpan.textContent = t.calculating;
-            } else {
-                calcSpan.textContent = t.calcBtn;
-            }
-        }
     }
 
     function initLanguage() {

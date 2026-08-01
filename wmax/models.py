@@ -22,13 +22,15 @@ class CalculateResponse(BaseModel):
     Response model with the result of the one-repetition maximum calculation.
 
     Attributes:
-        maximum (float): Calculated 1RM.
+        maximum (float): Calculated 1RM in primary unit.
+        maximum_alt (float): Calculated 1RM in alternative unit.
         weight (float): Lifted weight.
         reps (int): Number of repetitions.
         mode (int): Used mode.
     """
 
     maximum: float
+    maximum_alt: float
     weight: float
     reps: int
     mode: int

@@ -67,10 +67,7 @@
                 <label for="weight" data-i18n="weightLifted">Weight lifted</label>
                 <div class="input-wrapper">
                     <input type="number" id="weight" min="1" max="1500" step="0.5" value="100">
-                    <select id="weight-unit" class="unit-select">
-                        <option value="kg" data-i18n="unitKg">kg</option>
-                        <option value="lbs" data-i18n="unitLbs">lbs</option>
-                    </select>
+                    <button type="button" id="unit-toggle" class="unit-toggle" data-unit="kg">kg</button>
                 </div>
             </div>
 
@@ -101,17 +98,17 @@
                     <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                 </div>
             </div>
-            
-            <button type="submit" class="btn-primary" id="calc-btn">
-                <span data-i18n="calcBtn">Calculate Max</span>
-            </button>
         </form>
 
         <div id="result-box" class="result-box">
             <h3 data-i18n="resultTitle">Your 1RM is</h3>
             <div class="result-value">
                 <span id="max-result">--</span>
-                <span class="result-unit" data-i18n="unitKg">kg</span>
+                <span class="result-unit" id="result-unit-main" data-i18n="unitKg">kg</span>
+            </div>
+            <div class="result-value-alt">
+                <span id="max-result-alt">--</span>
+                <span class="result-unit" id="result-unit-alt" data-i18n="unitLbs">lbs</span>
             </div>
         </div>
         <div id="error-box" class="error-box"></div>
