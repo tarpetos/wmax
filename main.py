@@ -1,4 +1,7 @@
 import argparse
+import threading
+import time
+import webbrowser
 
 import uvicorn
 from loguru import logger
@@ -16,6 +19,13 @@ def main() -> None:
     args = parser.parse_args()
 
     logger.info("Server starting on http://{}:{}", args.host, args.port)
+
+    def open_browser() -> None:
+        time.sleep(1.5)
+        webbrowser.open(f"http://{args.host}:{args.port}")
+
+    threading.Thread(target=open_browser, daemon=True).start()
+
     uvicorn.run(app, host=args.host, port=args.port)
 
 
