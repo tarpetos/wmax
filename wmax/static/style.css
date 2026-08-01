@@ -487,6 +487,7 @@ select option {
     border-radius: 12px;
     overflow: hidden;
     font-size: 13px;
+    flex: 1;
 }
 
 .glass-table th, .glass-table td {
