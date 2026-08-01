@@ -1,7 +1,7 @@
 [project]
 name = "wmax"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.2"
+description = "One Rep Max (1RM) calculator with a glassmorphism web UI"
 readme = "README.md"
 authors = [{ name = "tarpetos", email = "hevlichtaras@gmail.com" }]
 requires-python = ">=3.13, <3.14"
