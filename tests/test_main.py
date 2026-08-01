@@ -1,19 +1,19 @@
 import sys
+from pathlib import Path
 from unittest.mock import patch
-
-import pytest
 
 
 def test_main_pyinstaller_path() -> None:
-    with patch.object(sys, "frozen", True, create=True), patch.object(sys, "_MEIPASS", "/tmp/mocked", create=True):
+    with patch.object(sys, "frozen", True, create=True), patch.object(
+        sys, "_MEIPASS", "/tmp/mocked", create=True
+    ):
         import importlib
 
         import wmax.main
 
         importlib.reload(wmax.main)
-        assert wmax.main.base_dir == "/tmp/mocked"
+        assert wmax.main.base_dir == Path("/tmp/mocked")
 
-    # Reload again to restore state
     import importlib
     import wmax.main
 

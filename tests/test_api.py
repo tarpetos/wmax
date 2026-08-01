@@ -23,7 +23,6 @@ def test_calculate_invalid_data() -> None:
 
 
 def test_calculate_value_error() -> None:
-    # Test the ValueError block directly by mocking calculate_1rm
     with patch("wmax.api.calculate_1rm", side_effect=ValueError("Mocked error")):
         response = client.post("/api/calculate", json={"weight": 100, "reps": 6, "mode": 1})
         assert response.status_code == 400
