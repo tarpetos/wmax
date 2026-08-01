@@ -5,22 +5,23 @@ from wmax.core import calculate_1rm
 
 def test_calculate_1rm_power() -> None:
     assert calculate_1rm(100, 1, 0) == 100
-    assert calculate_1rm(100, 4, 0) == round(100 / 0.85)
+    assert calculate_1rm(100, 4, 0) == 117.5
+    assert calculate_1rm(20, 10, 0) == 29.0
 
 
 def test_calculate_1rm_average() -> None:
     assert calculate_1rm(100, 1, 1) == 100
-    assert calculate_1rm(100, 6, 1) == round(100 / 0.85)
+    assert calculate_1rm(100, 6, 1) == 117.5
 
 
 def test_calculate_1rm_endurance() -> None:
     assert calculate_1rm(100, 1, 2) == 100
-    assert calculate_1rm(100, 8, 2) == round(100 / 0.85)
+    assert calculate_1rm(100, 8, 2) == 117.5
 
 
 def test_calculate_1rm_high_reps() -> None:
-    assert calculate_1rm(100, 50, 2) == round(100 / 0.50)
-    assert calculate_1rm(100, 100, 2) == round(100 / 0.50)
+    assert calculate_1rm(100, 50, 2) == 200.0
+    assert calculate_1rm(100, 100, 2) == 200.0
 
 
 def test_calculate_1rm_invalid() -> None:

@@ -7,6 +7,17 @@ RATES = [
 ]
 
 
+def my_round(number: float) -> float:
+    """
+    Rounds the number according to custom rules:
+    - If >= 50, rounds to the nearest 2.5.
+    - If < 50, rounds to the nearest 1.
+    """
+    if number >= 50.0:
+        return 2.5 * round(number / 2.5)
+    return 1.0 * round(number / 1.0)
+
+
 def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
     """
     Calculates the One Repetition Maximum (1RM).
@@ -42,6 +53,6 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
 
     percent = 100 - (found_i - 1) * 5
 
-    maximum = round(weight / (percent / 100.0))
+    maximum = my_round(weight / (percent / 100.0))
     logger.info("Calculation complete. Maximum: {}", maximum)
-    return float(maximum)
+    return maximum
