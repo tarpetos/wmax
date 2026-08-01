@@ -25,16 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const mode = parseInt(modeSelect.value);
 
         if (isNaN(weight) || weight <= 0 || weight > 500) {
-            showError("Please enter a valid weight (1-500 kg).");
+            const t = window.translations[currentLang];
+            showError(t.errWeight);
             return;
         }
         if (isNaN(reps) || reps <= 0 || reps > 100) {
-            showError("Please enter valid repetitions (1-100).");
+            const t = window.translations[currentLang];
+            showError(t.errReps);
             return;
         }
 
         btn.classList.add("loading");
-        btn.querySelector("span").textContent = "Calculating...";
+        const t = window.translations[currentLang];
+        btn.querySelector("span").textContent = t.calculating;
         errorBox.classList.remove("show");
 
         try {
@@ -84,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
             showError(err.message);
         } finally {
             btn.classList.remove("loading");
-            btn.querySelector("span").textContent = "Calculate Max";
+            const t = window.translations[currentLang];
+            btn.querySelector("span").textContent = t.calcBtn;
         }
     });
 
@@ -150,10 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tableContainer) tableContainer.classList.toggle("show");
         if (backdrop) backdrop.classList.toggle("show");
         
+        const t = window.translations[currentLang];
         if (tableContainer && tableContainer.classList.contains("show")) {
-            toggleTableBtn.querySelector("span").textContent = "Hide Reference Table";
+            toggleTableBtn.querySelector("span").textContent = t.hideTable;
         } else {
-            toggleTableBtn.querySelector("span").textContent = "View Reference Table";
+            toggleTableBtn.querySelector("span").textContent = t.viewTable;
         }
     }
 
@@ -182,4 +187,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initial highlight
     updateTableHighlight(parseInt(modeSelect.value), parseInt(repsInput.value));
+
+    // Language logic
+    let currentLang = 'en';
+
+    function setLanguage(langCode) {
+        if (!window.translations[langCode]) {
+            langCode = 'en';
+        }
+        currentLang = langCode;
+        const t = window.translations[langCode];
+        
+        // Update all data-i18n texts
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) {
+                el.textContent = t[key];
+            }
+        });
+        
+        // Update button text contextually
+        if (toggleTableBtn) {
+            const span = toggleTableBtn.querySelector('span');
+            if (tableContainer && tableContainer.classList.contains('show')) {
+                span.textContent = t.hideTable;
+            } else {
+                span.textContent = t.viewTable;
+            }
+            // Update calc button contextually if loading
+            const calcSpan = btn.querySelector('span');
+            if (btn.classList.contains('loading')) {
+                calcSpan.textContent = t.calculating;
+            } else {
+                calcSpan.textContent = t.calcBtn;
+            }
+        }
+    }
+
+    function initLanguage() {
+        const langDropdown = document.getElementById('lang-dropdown');
+        const langBtn = document.getElementById('lang-btn');
+        const langCodeSpan = document.getElementById('lang-code');
+        const langFlagSpan = document.getElementById('lang-flag');
+
+        // Detect user locale
+        const userLocale = navigator.language || navigator.userLanguage;
+        let detectedLang = userLocale.split('-')[0].toLowerCase();
+        
+        // Fallback or use detected
+        if (!window.translations[detectedLang]) {
+            detectedLang = 'en';
+        }
+
+        // Set initial
+        setLanguage(detectedLang);
+
+        // Update button UI
+        const activeLi = langDropdown.querySelector(`li[data-lang="${detectedLang}"]`);
+        if (activeLi) {
+            const text = activeLi.textContent.trim();
+            const flag = text.substring(0, 2);
+            langFlagSpan.textContent = flag;
+            langCodeSpan.textContent = detectedLang.toUpperCase();
+        }
+
+        // Dropdown interactions
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-selector')) {
+                langDropdown.classList.remove('show');
+            }
+        });
+
+        langDropdown.querySelectorAll('li').forEach(li => {
+            li.addEventListener('click', () => {
+                const lang = li.getAttribute('data-lang');
+                const text = li.textContent.trim();
+                const flag = text.substring(0, 2);
+                langFlagSpan.textContent = flag;
+                langCodeSpan.textContent = lang.toUpperCase();
+                langDropdown.classList.remove('show');
+                setLanguage(lang);
+            });
+        });
+    }
+
+    initLanguage();
 });

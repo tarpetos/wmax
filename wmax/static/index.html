@@ -16,6 +16,34 @@
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
+    
+    <div class="lang-selector">
+        <button id="lang-btn" class="lang-btn">
+            <span id="lang-flag">🇬🇧</span> <span id="lang-code">EN</span>
+        </button>
+        <ul id="lang-dropdown" class="lang-dropdown">
+            <li data-lang="en">🇬🇧 English</li>
+            <li data-lang="uk">🇺🇦 Українська</li>
+            <li data-lang="ru">🇷🇺 Русский</li>
+            <li data-lang="es">🇪🇸 Español</li>
+            <li data-lang="fr">🇫🇷 Français</li>
+            <li data-lang="de">🇩🇪 Deutsch</li>
+            <li data-lang="zh">🇨🇳 中文</li>
+            <li data-lang="ja">🇯🇵 日本語</li>
+            <li data-lang="ko">🇰🇷 한국어</li>
+            <li data-lang="it">🇮🇹 Italiano</li>
+            <li data-lang="pt">🇵🇹 Português</li>
+            <li data-lang="ar">🇸🇦 العربية</li>
+            <li data-lang="hi">🇮🇳 हिन्दी</li>
+            <li data-lang="bn">🇧🇩 বাংলা</li>
+            <li data-lang="tr">🇹🇷 Türkçe</li>
+            <li data-lang="pl">🇵🇱 Polski</li>
+            <li data-lang="nl">🇳🇱 Nederlands</li>
+            <li data-lang="vi">🇻🇳 Tiếng Việt</li>
+            <li data-lang="th">🇹🇭 ไทย</li>
+            <li data-lang="id">🇮🇩 Indonesia</li>
+        </ul>
+    </div>
     <div class="layout-wrapper">
         <main class="app-container">
         <header class="app-header">
@@ -28,17 +56,17 @@
                     <path d="M8 2h8"></path>
                 </svg>
             </div>
-            <h1>WMAX</h1>
-            <p>One Rep Max Calculator</p>
+            <h1 data-i18n="title">WMAX</h1>
+            <p data-i18n="subtitle">One Rep Max Calculator</p>
         </header>
 
         <button type="button" class="btn-secondary" id="toggle-table-btn" style="margin-bottom: 20px;">
-            <span>View Reference Table</span>
+            <span data-i18n="viewTable">View Reference Table</span>
         </button>
 
         <form id="calc-form" class="calc-form">
             <div class="input-group">
-                <label for="weight">Weight lifted</label>
+                <label for="weight" data-i18n="weightLifted">Weight lifted</label>
                 <div class="input-wrapper">
                     <input type="number" id="weight" value="100" min="1" max="500" step="0.1" required>
                     <span class="unit">kg</span>
@@ -46,32 +74,32 @@
             </div>
 
             <div class="input-group">
-                <label for="reps">Repetitions</label>
+                <label for="reps" data-i18n="repetitions">Repetitions</label>
                 <div class="input-wrapper">
                     <input type="number" id="reps" value="6" min="1" max="100" step="1" required>
-                    <span class="unit">reps</span>
+                    <span class="unit" data-i18n="repetitions">reps</span>
                 </div>
             </div>
 
             <div class="input-group">
-                <label for="mode">Muscle Profile</label>
+                <label for="mode" data-i18n="muscleProfile">Muscle Profile</label>
                 <div class="select-wrapper">
                     <select id="mode">
-                        <option value="0">Power</option>
-                        <option value="1" selected>Average</option>
-                        <option value="2">Endurance</option>
+                        <option value="0" id="opt-power" data-i18n="power">Power</option>
+                        <option value="1" id="opt-avg" data-i18n="average" selected>Average</option>
+                        <option value="2" id="opt-end" data-i18n="endurance">Endurance</option>
                     </select>
                     <svg class="select-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                 </div>
             </div>
             
             <button type="submit" class="btn-primary" id="calc-btn">
-                <span>Calculate Max</span>
+                <span data-i18n="calcBtn">Calculate Max</span>
             </button>
         </form>
 
         <div id="result-box" class="result-box">
-            <h3>Your 1RM is</h3>
+            <h3 data-i18n="resultTitle">Your 1RM is</h3>
             <div class="result-value">
                 <span id="max-result">--</span>
                 <span class="result-unit">kg</span>
@@ -83,17 +111,17 @@
         <div id="modal-backdrop" class="modal-backdrop"></div>
         <aside id="reference-table-container" class="table-card">
             <button type="button" id="close-table-btn" class="close-btn">&times;</button>
-            <h2 class="table-title">Reference Ranges</h2>
+            <h2 class="table-title" data-i18n="tableTitle">Reference Ranges</h2>
             <table class="glass-table">
                 <thead>
                     <tr>
-                        <th rowspan="2">% of 1RM</th>
-                        <th colspan="3">Muscle Fiber Ratio</th>
+                        <th rowspan="2" data-i18n="percent1rm">% of 1RM</th>
+                        <th colspan="3" data-i18n="muscleRatio">Muscle Fiber Ratio</th>
                     </tr>
                     <tr>
-                        <th id="th-mode-0">Power</th>
-                        <th id="th-mode-1">Average</th>
-                        <th id="th-mode-2">Endurance</th>
+                        <th id="th-mode-0" data-i18n="power">Power</th>
+                        <th id="th-mode-1" data-i18n="average">Average</th>
+                        <th id="th-mode-2" data-i18n="endurance">Endurance</th>
                     </tr>
                 </thead>
                 <tbody id="rates-tbody">
@@ -113,6 +141,7 @@
         </aside>
     </div>
 
+    <script src="/static/translations.js"></script>
     <script src="/static/script.js"></script>
 </body>
 </html>
