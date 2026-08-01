@@ -193,8 +193,8 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .app-header {
@@ -367,22 +367,24 @@ select option {
 
 /* Results */
 .result-box {
-    margin-top: 30px;
-    padding: 20px;
+    max-height: 0;
+    margin-top: 0;
+    padding: 0 20px;
     background: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--border-glass);
+    border: 1px solid transparent;
     border-radius: 16px;
     text-align: center;
     opacity: 0;
-    transform: translateY(10px);
-    visibility: hidden;
+    overflow: hidden;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .result-box.show {
-    visibility: visible;
+    max-height: 200px;
+    margin-top: 30px;
+    padding: 20px;
     opacity: 1;
-    transform: translateY(0);
+    border-color: var(--border-glass);
 }
 
 .result-box h3 {
@@ -552,8 +554,8 @@ select option {
     }
 
     @keyframes fadeInMobile {
-        from { opacity: 0; top: 52%; }
-        to { opacity: 1; top: 50%; }
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .close-btn {
