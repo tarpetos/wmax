@@ -1,14 +1,7 @@
 import argparse
-import os
-import sys
 import threading
 import time
 import webbrowser
-
-if sys.stdout is None:
-    sys.stdout = open(os.devnull, "w")  # noqa: SIM115
-if sys.stderr is None:
-    sys.stderr = open(os.devnull, "w")  # noqa: SIM115
 
 import uvicorn
 from loguru import logger

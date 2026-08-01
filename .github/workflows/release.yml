@@ -49,7 +49,7 @@ jobs:
             artifact_name: wmax-windows.exe
             executable_name: wmax-windows.exe
             separator: ";"
-            extra_args: "--noconsole"
+            extra_args: "-w"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
