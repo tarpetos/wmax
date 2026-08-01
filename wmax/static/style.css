@@ -82,12 +82,39 @@ body {
     100% { transform: translate(50px, 50px) scale(1.2); }
 }
 
-/* Lang Selector */
-.lang-selector {
+/* Top Controls */
+.top-controls {
     position: absolute;
     top: 20px;
     right: 20px;
     z-index: 1000;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.exit-btn {
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    color: var(--error);
+    padding: 8px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.exit-btn:hover {
+    background: rgba(255, 77, 77, 0.25);
+    color: white;
+}
+
+/* Lang Selector */
+.lang-selector {
+    position: relative;
 }
 .lang-btn {
     background: var(--bg-glass);

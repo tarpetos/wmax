@@ -112,6 +112,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const autoCalc = debounce(performCalculation, 300);
 
+    const exitServerBtn = document.getElementById("exit-server-btn");
+    if (exitServerBtn) {
+        exitServerBtn.addEventListener("click", async () => {
+            if (confirm("Are you sure you want to stop the server and exit the application?")) {
+                try {
+                    await fetch("/api/quit", { method: "POST" });
+                } catch (e) {
+                    console.error("Failed to shutdown gracefully", e);
+                }
+                document.body.innerHTML = "<h2 style='text-align: center; margin-top: 20%; color: white;'>Server stopped. You can close this tab.</h2>";
+            }
+        });
+    }
+
     weightInput.addEventListener("input", autoCalc);
     repsInput.addEventListener("input", autoCalc);
     modeSelect.addEventListener("change", performCalculation);

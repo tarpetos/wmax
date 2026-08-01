@@ -1,3 +1,7 @@
+import os
+import threading
+import time
+
 from fastapi import APIRouter, HTTPException
 from loguru import logger
 
@@ -5,6 +9,21 @@ from wmax.core import calculate_1rm
 from wmax.models import CalculateRequest, CalculateResponse
 
 router = APIRouter(prefix="/api")
+
+
+@router.post("/quit")
+def quit_app() -> dict[str, str]:
+    """
+    Terminates the application gracefully.
+    """
+    logger.info("Shutdown requested via API")
+
+    def exit_delay() -> None:
+        time.sleep(0.5)
+        os._exit(0)
+
+    threading.Thread(target=exit_delay).start()
+    return {"status": "shutting down"}
 
 
 @router.post("/calculate", response_model=CalculateResponse)
@@ -25,7 +44,6 @@ def calculate(request: CalculateRequest) -> CalculateResponse:
     try:
         maximum = calculate_1rm(weight=request.weight, reps=request.reps, mode=request.mode, unit=request.unit)
 
-        # Calculate alternative unit
         if request.unit == "kg":
             alt_unit = "lbs"
             alt_weight = request.weight * 2.20462262

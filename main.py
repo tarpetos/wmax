@@ -18,6 +18,7 @@ from wmax.app import app, static_dir
 
 try:
     import pystray
+
     HAS_PYSTRAY = True
 except Exception:
     HAS_PYSTRAY = False
@@ -44,12 +45,10 @@ def main() -> None:
         os._exit(0)
 
     if HAS_PYSTRAY:
-        # Run Uvicorn in a background thread
         server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, log_config=None))
         threading.Thread(target=server.run, daemon=True).start()
         threading.Thread(target=open_browser, daemon=True).start()
 
-        # Setup System Tray in the main thread
         icon_path = static_dir / "favicon.ico"
         try:
             image = Image.open(icon_path)
@@ -57,8 +56,10 @@ def main() -> None:
             image = Image.new("RGB", (64, 64), color="black")
 
         menu = pystray.Menu(
-            pystray.MenuItem("Open in Browser", lambda: webbrowser.open(f"http://{args.host}:{args.port}")),
-            pystray.MenuItem("Exit", exit_app)
+            pystray.MenuItem(
+                "Open in Browser", lambda: webbrowser.open(f"http://{args.host}:{args.port}"), default=True
+            ),
+            pystray.MenuItem("Exit", exit_app),
         )
         icon = pystray.Icon("wmax", image, "WMAX Server", menu)
         icon.run()

@@ -19,8 +19,16 @@
         <div class="blob blob-3"></div>
     </div>
     
-    <div class="lang-selector">
-        <button id="lang-btn" class="lang-btn">
+    <div class="top-controls">
+        <button id="exit-server-btn" class="exit-btn" title="Exit Server" aria-label="Exit Server">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+        </button>
+        <div class="lang-selector">
+            <button id="lang-btn" class="lang-btn">
             <span id="lang-flag" class="fi fi-us"></span> <span id="lang-code">EN</span>
         </button>
         <ul id="lang-dropdown" class="lang-dropdown">
@@ -45,6 +53,7 @@
             <li data-lang="th"><span class="fi fi-th"></span> ไทย</li>
             <li data-lang="id"><span class="fi fi-id"></span> Indonesia</li>
         </ul>
+        </div>
     </div>
     <div class="layout-wrapper">
         <main class="app-container">
@@ -80,7 +89,7 @@
 
             <div class="input-group">
                 <label for="mode">
-                    <span data-i18n="muscleProfile">Muscle Profile</span>
+                    <span data-i18n="muscleProfile">Power to endurance ratio</span>
                     <button type="button" class="help-btn" id="toggle-table-btn" title="Help">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -123,7 +132,7 @@
                 <thead>
                     <tr>
                         <th rowspan="2" data-i18n="percent1rm">% of 1RM</th>
-                        <th colspan="3" data-i18n="muscleRatio">Muscle Fiber Ratio</th>
+                        <th colspan="3" data-i18n="muscleRatio">Power to endurance ratio</th>
                     </tr>
                     <tr>
                         <th id="th-mode-0" data-i18n="power">Power</th>
