@@ -7,12 +7,10 @@ RATES = [
 ]
 
 
-UNIT_MULTIPLIERS = {
-    "kg": 1.0,
-    "lbs": 2.20462262
-}
+UNIT_MULTIPLIERS = {"kg": 1.0, "lbs": 2.20462262}
 BASE_MIN_WEIGHT = 1.0
 BASE_MAX_WEIGHT = 500.0
+
 
 def get_weight_limits(unit: str) -> tuple[float, float]:
     """Returns dynamic min and max weights based on the unit."""
@@ -52,11 +50,11 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1, unit: str = "kg") -> 
     logger.debug("1RM calculation started: weight={}, reps={}, mode={}, unit={}", weight, reps, mode, unit)
     if unit not in UNIT_MULTIPLIERS:
         raise ValueError(f"Unit must be one of {list(UNIT_MULTIPLIERS.keys())}")
-        
+
     min_weight, max_weight = get_weight_limits(unit)
     if weight < min_weight or weight > max_weight:
         raise ValueError(f"Weight must be between {min_weight:.1f} and {max_weight:.1f} {unit}")
-        
+
     if reps < 1 or reps > 100:
         logger.error("Invalid repetitions provided: {}", reps)
         raise ValueError("Reps must be between 1 and 100")

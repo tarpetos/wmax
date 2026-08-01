@@ -4,9 +4,7 @@ from unittest.mock import patch
 
 
 def test_app_pyinstaller_path() -> None:
-    with patch.object(sys, "frozen", True, create=True), patch.object(
-        sys, "_MEIPASS", "/tmp/mocked", create=True
-    ):
+    with patch.object(sys, "frozen", True, create=True), patch.object(sys, "_MEIPASS", "/tmp/mocked", create=True):
         import importlib
 
         import wmax.app
@@ -23,6 +21,7 @@ def test_app_pyinstaller_path() -> None:
 def test_main_run() -> None:
     with patch("sys.argv", ["main"]):
         import main
+
         main.HAS_PYSTRAY = False
         with patch("main.is_port_in_use", return_value=False), patch("main.uvicorn.Server.run") as mock_run:
             main.main()

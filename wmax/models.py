@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field, model_validator
 
+from wmax.core import get_weight_limits
+
 
 class CalculateRequest(BaseModel):
     """
@@ -17,8 +19,7 @@ class CalculateRequest(BaseModel):
     unit: str = Field("kg", description="Unit: kg or lbs")
 
     @model_validator(mode="after")
-    def validate_weight(self) -> 'CalculateRequest':
-        from wmax.core import get_weight_limits
+    def validate_weight(self) -> "CalculateRequest":
         min_w, max_w = get_weight_limits(self.unit)
         if self.weight < min_w or self.weight > max_w:
             raise ValueError(f"Weight must be between {min_w:.1f} and {max_w:.1f} {self.unit}")
