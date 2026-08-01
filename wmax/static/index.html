@@ -16,8 +16,8 @@
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
-    
-    <main class="app-container">
+    <div class="layout-wrapper">
+        <main class="app-container">
         <header class="app-header">
             <div class="logo">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -74,12 +74,10 @@
             </div>
         </div>
         <div id="error-box" class="error-box"></div>
-        
-        <button type="button" class="btn-secondary" id="toggle-table-btn">
-            <span>View Reference Table</span>
-        </button>
+        </main>
 
-        <div id="reference-table-container" class="table-container">
+        <aside class="table-card">
+            <h2 class="table-title">Reference Ranges</h2>
             <table class="glass-table">
                 <thead>
                     <tr>
@@ -87,12 +85,12 @@
                         <th colspan="3">Muscle Fiber Ratio</th>
                     </tr>
                     <tr>
-                        <th>Power</th>
-                        <th>Average</th>
-                        <th>Endurance</th>
+                        <th id="th-mode-0">Power</th>
+                        <th id="th-mode-1">Average</th>
+                        <th id="th-mode-2">Endurance</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="rates-tbody">
                     <tr><td>50%</td><td>30 - 37</td><td>38 - 49</td><td>50 - 50+</td></tr>
                     <tr><td>55%</td><td>26 - 29</td><td>30 - 37</td><td>38 - 49</td></tr>
                     <tr><td>60%</td><td>18 - 25</td><td>26 - 29</td><td>30 - 37</td></tr>
@@ -106,8 +104,8 @@
                     <tr><td>100%</td><td>1</td><td>1</td><td>1</td></tr>
                 </tbody>
             </table>
-        </div>
-    </main>
+        </aside>
+    </div>
 
     <script src="/static/script.js"></script>
 </body>

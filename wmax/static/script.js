@@ -97,17 +97,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     modeSelect.addEventListener("change", autoCalc);
 
-    const toggleTableBtn = document.getElementById("toggle-table-btn");
-    const tableContainer = document.getElementById("reference-table-container");
+    const rates = [
+        [1, 2, 3, 4, 6, 8, 10, 12, 18, 26, 30],
+        [1, 2, 4, 6, 8, 10, 12, 18, 26, 30, 38],
+        [1, 2, 4, 8, 10, 12, 18, 26, 30, 38, 50],
+    ];
 
-    if (toggleTableBtn && tableContainer) {
-        toggleTableBtn.addEventListener("click", () => {
-            tableContainer.classList.toggle("show");
-            if (tableContainer.classList.contains("show")) {
-                toggleTableBtn.querySelector("span").textContent = "Hide Reference Table";
-            } else {
-                toggleTableBtn.querySelector("span").textContent = "View Reference Table";
+    function updateTableHighlight(mode, reps) {
+        // Clear previous highlights
+        document.querySelectorAll('.highlight-header').forEach(el => el.classList.remove('highlight-header'));
+        document.querySelectorAll('.highlight-cell').forEach(el => el.classList.remove('highlight-cell'));
+
+        // Highlight header
+        const modeHeader = document.getElementById(`th-mode-${mode}`);
+        if (modeHeader) modeHeader.classList.add('highlight-header');
+
+        // Find correct row index
+        let found_i = rates[mode].length;
+        for (let i = 0; i < rates[mode].length; i++) {
+            if (rates[mode][i] > reps) {
+                found_i = i;
+                break;
             }
-        });
+        }
+        
+        const rowIndex = 11 - found_i;
+        const tbody = document.getElementById("rates-tbody");
+        if (tbody) {
+            const targetRow = tbody.rows[rowIndex];
+            if (targetRow) {
+                // Column 0 is %, Column 1 is Power, Column 2 is Average, Column 3 is Endurance
+                const targetCell = targetRow.cells[mode + 1];
+                if (targetCell) {
+                    targetCell.classList.add('highlight-cell');
+                }
+            }
+        }
     }
+
+    // Add listener to inputs to live update highlighting
+    repsInput.addEventListener("input", () => {
+        const r = parseInt(repsInput.value);
+        const m = parseInt(modeSelect.value);
+        if (!isNaN(r) && r > 0) updateTableHighlight(m, r);
+    });
+
+    modeSelect.addEventListener("change", () => {
+        const r = parseInt(repsInput.value);
+        const m = parseInt(modeSelect.value);
+        if (!isNaN(r) && r > 0) updateTableHighlight(m, r);
+    });
+
+    // Initial highlight
+    updateTableHighlight(parseInt(modeSelect.value), parseInt(repsInput.value));
 });
