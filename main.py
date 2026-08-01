@@ -24,6 +24,15 @@ except Exception:
     HAS_PYSTRAY = False
 
 
+def can_use_tray(server_mode: bool) -> bool:
+    if server_mode or not HAS_PYSTRAY:
+        return False
+    if sys.platform.startswith("linux"):
+        if not os.environ.get("DISPLAY") and not os.environ.get("WAYLAND_DISPLAY"):
+            return False
+    return True
+
+
 def main() -> None:
     """
     Starts the Uvicorn web server for the application.
@@ -50,7 +59,7 @@ def main() -> None:
             icon.stop()
         os._exit(0)
 
-    if HAS_PYSTRAY and not args.server_mode:
+    if can_use_tray(args.server_mode):
         server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, log_config=None))
         threading.Thread(target=server.run, daemon=True).start()
         threading.Thread(target=open_browser, daemon=True).start()
@@ -75,4 +84,9 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        # Prevent Uvicorn and asyncio from printing messy tracebacks on Ctrl+C
+        print("\nServer stopped.")
+        os._exit(0)
