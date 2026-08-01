@@ -153,13 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function toggleTable() {
         if (tableContainer) tableContainer.classList.toggle("show");
         if (backdrop) backdrop.classList.toggle("show");
-        
-        const t = window.translations[currentLang];
-        if (tableContainer && tableContainer.classList.contains("show")) {
-            toggleTableBtn.querySelector("span").textContent = t.hideTable;
-        } else {
-            toggleTableBtn.querySelector("span").textContent = t.viewTable;
-        }
     }
 
     if (toggleTableBtn) {
@@ -206,15 +199,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // Update button text contextually
-        if (toggleTableBtn) {
-            const span = toggleTableBtn.querySelector('span');
-            if (tableContainer && tableContainer.classList.contains('show')) {
-                span.textContent = t.hideTable;
-            } else {
-                span.textContent = t.viewTable;
-            }
-            // Update calc button contextually if loading
+        // Update calc button contextually if loading
+        if (btn) {
             const calcSpan = btn.querySelector('span');
             if (btn.classList.contains('loading')) {
                 calcSpan.textContent = t.calculating;

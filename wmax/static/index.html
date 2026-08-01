@@ -62,10 +62,6 @@
             <p data-i18n="subtitle">One Rep Max Calculator</p>
         </header>
 
-        <button type="button" class="btn-secondary" id="toggle-table-btn" style="margin-bottom: 20px;">
-            <span data-i18n="viewTable">View Reference Table</span>
-        </button>
-
         <form id="calc-form" class="calc-form">
             <div class="input-group">
                 <label for="weight" data-i18n="weightLifted">Weight lifted</label>
@@ -84,7 +80,16 @@
             </div>
 
             <div class="input-group">
-                <label for="mode" data-i18n="muscleProfile">Muscle Profile</label>
+                <label for="mode">
+                    <span data-i18n="muscleProfile">Muscle Profile</span>
+                    <button type="button" class="help-btn" id="toggle-table-btn" title="Help">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </button>
+                </label>
                 <div class="select-wrapper">
                     <select id="mode">
                         <option value="0" id="opt-power" data-i18n="power">Power</option>
@@ -114,6 +119,7 @@
         <aside id="reference-table-container" class="table-card">
             <button type="button" id="close-table-btn" class="close-btn">&times;</button>
             <h2 class="table-title" data-i18n="tableTitle">Reference Ranges</h2>
+            <p class="table-help" data-i18n="tableHelp">How to determine your profile: Check how many reps you can do at a given % of your 1RM. Find the intersection in the table to determine your power to endurance ratio.</p>
             <table class="glass-table">
                 <thead>
                     <tr>

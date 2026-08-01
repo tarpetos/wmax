@@ -246,12 +246,30 @@ p {
     gap: 8px;
 }
 
-label {
+.input-group label {
+    display: flex;
+    align-items: center;
     font-size: 14px;
     font-weight: 600;
     color: var(--text-secondary);
-    text-transform: uppercase;
+    margin-bottom: 8px;
     letter-spacing: 0.5px;
+}
+
+.help-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-left: 8px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.help-btn:hover {
+    color: var(--accent);
 }
 
 .input-wrapper, .select-wrapper {
@@ -419,34 +437,22 @@ select option {
 }
 
 /* Reference Table styles */
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-glass);
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    margin-bottom: 20px;
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-}
-
 .table-title {
     font-size: 20px;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-align: center;
     background: linear-gradient(to right, #fff, #a5b4fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.table-help {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    line-height: 1.5;
+    text-align: center;
 }
 
 .close-btn {
