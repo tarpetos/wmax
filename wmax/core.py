@@ -36,9 +36,8 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1, unit: str = "kg") -> 
         ValueError: If the input data is invalid.
     """
     logger.debug("1RM calculation started: weight={}, reps={}, mode={}, unit={}", weight, reps, mode, unit)
-    if weight < 1 or weight > 1500:
-        logger.error("Invalid weight provided: {}", weight)
-        raise ValueError("Weight must be between 1 and 1500")
+    if weight < 1 or weight > 500:
+        raise ValueError("Weight must be between 1 and 500")
     if unit not in ("kg", "lbs"):
         raise ValueError("Unit must be kg or lbs")
     if reps < 1 or reps > 100:

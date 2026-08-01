@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const reps = parseInt(repsInput.value);
         const mode = parseInt(modeSelect.value);
 
-        if (isNaN(weight) || weight <= 0 || weight > 1500 || isNaN(reps) || reps <= 0 || reps > 100) {
+        if (isNaN(weight) || weight <= 0 || weight > 500 || isNaN(reps) || reps <= 0 || reps > 100) {
             resultBox.classList.remove("show");
             return;
         }
