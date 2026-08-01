@@ -1,12 +1,21 @@
 import argparse
+import os
+import sys
 import threading
 import time
 import webbrowser
 
+if sys.stdout is None:
+    sys.stdout = open(os.devnull, "w")  # noqa: SIM115
+if sys.stderr is None:
+    sys.stderr = open(os.devnull, "w")  # noqa: SIM115
+
+import pystray
 import uvicorn
 from loguru import logger
+from PIL import Image
 
-from wmax.app import app
+from wmax.app import app, static_dir
 
 
 def main() -> None:
@@ -24,9 +33,28 @@ def main() -> None:
         time.sleep(1.5)
         webbrowser.open(f"http://{args.host}:{args.port}")
 
+    def exit_app(icon: pystray.Icon, _item: pystray.MenuItem) -> None:
+        icon.stop()
+        os._exit(0)
+
+    # Run Uvicorn in a background thread
+    server = uvicorn.Server(uvicorn.Config(app, host=args.host, port=args.port, log_config=None))
+    threading.Thread(target=server.run, daemon=True).start()
     threading.Thread(target=open_browser, daemon=True).start()
 
-    uvicorn.run(app, host=args.host, port=args.port)
+    # Setup System Tray in the main thread
+    icon_path = static_dir / "favicon.ico"
+    try:
+        image = Image.open(icon_path)
+    except Exception:
+        image = Image.new("RGB", (64, 64), color="black")
+
+    menu = pystray.Menu(
+        pystray.MenuItem("Open in Browser", lambda: webbrowser.open(f"http://{args.host}:{args.port}")),
+        pystray.MenuItem("Exit", exit_app),
+    )
+    icon = pystray.Icon("wmax", image, "WMAX Server", menu)
+    icon.run()
 
 
 if __name__ == "__main__":

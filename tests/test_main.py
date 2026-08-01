@@ -21,9 +21,13 @@ def test_app_pyinstaller_path() -> None:
 
 
 def test_main_run() -> None:
-    with patch("main.uvicorn.run") as mock_run, patch("sys.argv", ["main"]):
+    with (
+        patch("main.uvicorn.Server.run") as mock_server_run,
+        patch("main.pystray.Icon.run") as mock_icon_run,
+        patch("sys.argv", ["main"])
+    ):
         import main
 
         main.main()
-        import wmax.app
-        mock_run.assert_called_once_with(wmax.app.app, host="127.0.0.1", port=8372)
+        mock_server_run.assert_called_once()
+        mock_icon_run.assert_called_once()
