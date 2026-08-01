@@ -7,11 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxResult = document.getElementById("max-result");
     const errorBox = document.getElementById("error-box");
 
+    let errorTimeout;
     function showError(msg) {
         errorBox.textContent = msg;
         errorBox.classList.add("show");
         resultBox.classList.remove("show");
-        setTimeout(() => {
+        clearTimeout(errorTimeout);
+        errorTimeout = setTimeout(() => {
             errorBox.classList.remove("show");
         }, 5000);
     }
@@ -34,6 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let isCalculating = false;
 
     async function performCalculation() {
+        if (weightInput.value.trim() === "" || repsInput.value.trim() === "") {
+            resultBox.classList.remove("show");
+            errorBox.classList.remove("show");
+            return;
+        }
+
         const weight = parseFloat(weightInput.value);
         const reps = parseInt(repsInput.value);
         const mode = parseInt(modeSelect.value);
@@ -43,8 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const minW = BASE_LIMITS.minWeight * multiplier;
         const maxW = BASE_LIMITS.maxWeight * multiplier;
 
-        if (isNaN(weight) || weight < minW || weight > maxW || isNaN(reps) || reps <= 0 || reps > 100) {
+        if (isNaN(weight) || weight < minW || weight > maxW) {
             resultBox.classList.remove("show");
+            let msg = window.translations[currentLang].errWeight || "Enter valid weight ({min}-{max}).";
+            msg = msg.replace("{min}", minW % 1 === 0 ? minW : minW.toFixed(1));
+            msg = msg.replace("{max}", maxW % 1 === 0 ? maxW : maxW.toFixed(1));
+            showError(msg);
+            return;
+        }
+
+        if (isNaN(reps) || reps <= 0 || reps > 100) {
+            resultBox.classList.remove("show");
+            showError(window.translations[currentLang].errReps || "Enter valid reps (1-100).");
             return;
         }
 

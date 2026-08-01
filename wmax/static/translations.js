@@ -17,7 +17,7 @@ const translations = {
         tableHelp: "How to determine your profile: check how many reps you can do at a given % of your 1RM. Find the intersection in the table to determine your power to endurance ratio.",
         percent1rm: "% of 1RM",
         muscleRatio: "Power to endurance",
-        errWeight: "Enter valid weight (1-500).",
+        errWeight: "Enter valid weight ({min}-{max}).",
         errReps: "Enter valid reps (1-100)."
     },
     uk: {
@@ -38,7 +38,7 @@ const translations = {
         tableHelp: "Як визначити свій профіль: перевірте, скільки повторень ви можете виконати з певною вагою (% від 1ПМ). Знайдіть перетин у таблиці, щоб дізнатися своє співвідношення.",
         percent1rm: "% від 1ПМ",
         muscleRatio: "Співвідношення сили та витривалості",
-        errWeight: "Введіть правильну вагу (1-500).",
+        errWeight: "Введіть правильну вагу ({min}-{max}).",
         errReps: "Введіть правильну к-сть (1-100)."
     },
     ru: {
@@ -59,7 +59,7 @@ const translations = {
         tableHelp: "Как определить свой профиль: проверьте, сколько повторений вы можете выполнить с определенным весом (% от 1ПМ). Найдите пересечение в таблице, чтобы узнать свое соотношение.",
         percent1rm: "% от 1ПМ",
         muscleRatio: "Соотношение силы и выносливости",
-        errWeight: "Введите правильный вес (1-500).",
+        errWeight: "Введите правильный вес ({min}-{max}).",
         errReps: "Введите правильное кол-во (1-100)."
     },
     es: {
@@ -80,7 +80,7 @@ const translations = {
         tableHelp: "Cómo determinar tu perfil: verifica cuántas repeticiones puedes hacer a un % de tu 1RM. Encuentra la intersección en la tabla.",
         percent1rm: "% de 1RM",
         muscleRatio: "Fuerza a resistencia",
-        errWeight: "Peso válido (1-500).",
+        errWeight: "Peso válido ({min}-{max}).",
         errReps: "Repeticiones válidas (1-100)."
     },
     fr: {
@@ -101,7 +101,7 @@ const translations = {
         tableHelp: "Comment déterminer votre profil : vérifiez combien de répétitions vous pouvez faire à un % de votre 1RM. Trouvez l'intersection dans le tableau.",
         percent1rm: "% de 1RM",
         muscleRatio: "Force à endurance",
-        errWeight: "Poids valide (1-500).",
+        errWeight: "Poids valide ({min}-{max}).",
         errReps: "Répétitions valides (1-100)."
     },
     de: {
@@ -122,7 +122,7 @@ const translations = {
         tableHelp: "So bestimmen Sie Ihr Profil: prüfen Sie, wie viele Wiederholungen Sie bei einem % Ihres 1RM schaffen. Finden Sie den Schnittpunkt in der Tabelle.",
         percent1rm: "% von 1RM",
         muscleRatio: "Kraft zu ausdauer",
-        errWeight: "Gültiges gewicht (1-500).",
+        errWeight: "Gültiges gewicht ({min}-{max}).",
         errReps: "Gültige anzahl (1-100)."
     },
     zh: {
@@ -143,7 +143,7 @@ const translations = {
         tableHelp: "如何确定您的比例：测试您在一定1RM百分比下能做的次数，然后在表中找到交叉点。",
         percent1rm: "1RM百分比",
         muscleRatio: "力量与耐力比例",
-        errWeight: "有效重量 (1-500)。",
+        errWeight: "有效重量 ({min}-{max})。",
         errReps: "有效次数 (1-100)。"
     },
     ja: {
@@ -164,7 +164,7 @@ const translations = {
         tableHelp: "比率の決定方法：1RMの特定の割合で何回反復できるかを確認し、表の交差点を見つけます。",
         percent1rm: "1RMの割合",
         muscleRatio: "パワーと持久力の比率",
-        errWeight: "有効な重量 (1-500)。",
+        errWeight: "有効な重量 ({min}-{max})。",
         errReps: "有効な回数 (1-100)。"
     },
     ko: {
@@ -185,7 +185,7 @@ const translations = {
         tableHelp: "비율 결정 방법: 1RM의 특정 %에서 반복할 수 있는 횟수를 확인하고 표에서 교차점을 찾으십시오.",
         percent1rm: "1RM의 %",
         muscleRatio: "파워 대 지구력",
-        errWeight: "올바른 무게 (1-500).",
+        errWeight: "올바른 무게 ({min}-{max}).",
         errReps: "올바른 횟수 (1-100)."
     },
     it: {
@@ -206,7 +206,7 @@ const translations = {
         tableHelp: "Come determinare il tuo profilo: controlla quante ripetizioni puoi fare a una % del tuo 1RM. Trova l'intersezione nella tabella.",
         percent1rm: "% del 1RM",
         muscleRatio: "Forza a resistenza",
-        errWeight: "Peso valido (1-500).",
+        errWeight: "Peso valido ({min}-{max}).",
         errReps: "Quantità valida (1-100)."
     },
     pt: {
@@ -227,7 +227,7 @@ const translations = {
         tableHelp: "Como determinar o seu perfil: verifique quantas repetições pode fazer a uma % do seu 1RM. Encontre a interseção na tabela.",
         percent1rm: "% de 1RM",
         muscleRatio: "Força a resistência",
-        errWeight: "Peso válido (1-500).",
+        errWeight: "Peso válido ({min}-{max}).",
         errReps: "Qtd. válida (1-100)."
     },
     ar: {
@@ -248,7 +248,7 @@ const translations = {
         tableHelp: "كيفية تحديد النسبة: تحقق من عدد التكرارات التي يمكنك القيام بها بنسبة ٪ من 1RM الخاص بك ، ثم ابحث عن التقاطع في الجدول.",
         percent1rm: "% من الأقصى",
         muscleRatio: "القوة إلى التحمل",
-        errWeight: "وزن صحيح (1-500).",
+        errWeight: "وزن صحيح ({min}-{max}).",
         errReps: "تكرارات صحيحة (1-100)."
     },
     hi: {
@@ -269,7 +269,7 @@ const translations = {
         tableHelp: "अपना प्रोफ़ाइल कैसे निर्धारित करें: जांचें कि आप अपने 1RM के % पर कितने दोहराव कर सकते हैं। तालिका में प्रतिच्छेदन खोजें।",
         percent1rm: "1RM का %",
         muscleRatio: "पावर से सहनशक्ति",
-        errWeight: "मान्य वजन दर्ज करें (1-500)।",
+        errWeight: "मान्य वजन दर्ज करें ({min}-{max})।",
         errReps: "मान्य पुनरावृत्ति (1-100)।"
     },
     bn: {
@@ -290,7 +290,7 @@ const translations = {
         tableHelp: "আপনার প্রোফাইল কীভাবে নির্ধারণ করবেন: আপনার 1RM এর % এ আপনি কতগুলি পুনরাবৃত্তি করতে পারেন তা পরীক্ষা করুন। টেবিলে ছেদটি সন্ধান করুন।",
         percent1rm: "1RM এর %",
         muscleRatio: "শক্তি থেকে ধৈর্য",
-        errWeight: "সঠিক ওজন (1-500)।",
+        errWeight: "সঠিক ওজন ({min}-{max})।",
         errReps: "সঠিক পরিমাণ (1-100)।"
     },
     tr: {
@@ -311,7 +311,7 @@ const translations = {
         tableHelp: "Profilinizi nasıl belirlersiniz: 1RM'nizin bir %'sinde kaç tekrar yapabileceğinizi kontrol edin. Tablodaki kesişimi bulun.",
         percent1rm: "1RM %'si",
         muscleRatio: "Güç - dayanıklılık",
-        errWeight: "Geçerli ağırlık (1-500).",
+        errWeight: "Geçerli ağırlık ({min}-{max}).",
         errReps: "Geçerli adet (1-100)."
     },
     pl: {
@@ -332,7 +332,7 @@ const translations = {
         tableHelp: "Jak określić swój profil: sprawdź, ile powtórzeń możesz wykonać przy danym % swojego 1RM. Znajdź punkt przecięcia w tabeli.",
         percent1rm: "% z 1RM",
         muscleRatio: "Siła do wytrzymałości",
-        errWeight: "Podaj wagę (1-500).",
+        errWeight: "Podaj wagę ({min}-{max}).",
         errReps: "Podaj ilość (1-100)."
     },
     nl: {
@@ -353,7 +353,7 @@ const translations = {
         tableHelp: "Hoe uw profiel te bepalen: controleer hoeveel herhalingen u kunt doen bij een % van uw 1RM. Zoek het snijpunt in de tabel.",
         percent1rm: "% van 1RM",
         muscleRatio: "Kracht tot uithoudingsvermogen",
-        errWeight: "Geldig gewicht (1-500).",
+        errWeight: "Geldig gewicht ({min}-{max}).",
         errReps: "Geldig aantal (1-100)."
     },
     vi: {
@@ -374,7 +374,7 @@ const translations = {
         tableHelp: "Cách xác định tỷ lệ: kiểm tra số lần lặp lại bạn có thể thực hiện ở một % của 1RM. Tìm giao điểm trong bảng.",
         percent1rm: "% của 1RM",
         muscleRatio: "Sức mạnh đến sức bền",
-        errWeight: "Trọng lượng hợp lệ (1-500).",
+        errWeight: "Trọng lượng hợp lệ ({min}-{max}).",
         errReps: "Số lượng hợp lệ (1-100)."
     },
     th: {
@@ -395,7 +395,7 @@ const translations = {
         tableHelp: "วิธีพิจารณาโปรไฟล์ของคุณ: ตรวจสอบจำนวนครั้งที่คุณสามารถทำได้ที่ % ของ 1RM แล้วหาจุดตัดในตาราง",
         percent1rm: "% ของ 1RM",
         muscleRatio: "พลังต่อความทนทาน",
-        errWeight: "น้ำหนักไม่ถูกต้อง (1-500)",
+        errWeight: "น้ำหนักไม่ถูกต้อง ({min}-{max})",
         errReps: "จำนวนไม่ถูกต้อง (1-100)"
     },
     id: {
@@ -416,7 +416,7 @@ const translations = {
         tableHelp: "Cara menentukan profil Anda: periksa berapa banyak repetisi yang dapat Anda lakukan pada % dari 1RM Anda. Temukan persimpangannya di tabel.",
         percent1rm: "% dari 1RM",
         muscleRatio: "Kekuatan ke daya tahan",
-        errWeight: "Berat valid (1-500).",
+        errWeight: "Berat valid ({min}-{max}).",
         errReps: "Jumlah valid (1-100)."
     }
 };
