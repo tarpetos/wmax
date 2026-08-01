@@ -82,23 +82,58 @@ body {
     100% { transform: translate(50px, 50px) scale(1.2); }
 }
 
+/* Layout Wrapper */
+.layout-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: flex-start;
+    justify-content: center;
+    width: 90%;
+    max-width: 1100px;
+    z-index: 10;
+}
+
 /* Glassmorphism App Container */
-.app-container {
+.app-container, .table-card {
     background: var(--bg-glass);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border-glass);
     border-radius: 24px;
     padding: 40px;
-    width: 100%;
-    max-width: 520px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    z-index: 10;
     transition: transform 0.3s ease;
 }
 
-.app-container:hover {
+.app-container {
+    flex: 1;
+    width: 100%;
+    max-width: 420px;
+    z-index: 10;
+}
+
+.table-card {
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    display: none;
+    position: relative;
+}
+
+.table-card.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.app-container:hover, .table-card:hover {
     transform: translateY(-5px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .app-header {
@@ -344,17 +379,36 @@ select option {
     color: var(--text-primary);
 }
 
-.table-container {
-    margin-bottom: 25px;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.table-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+    background: linear-gradient(to right, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.table-container.show {
-    max-height: 600px;
-    opacity: 1;
+.close-btn {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 5px;
+}
+
+.close-btn:hover {
+    color: var(--accent);
+}
+
+.modal-backdrop {
+    display: none;
 }
 
 .glass-table {
@@ -413,7 +467,38 @@ select option {
 }
 
 /* Responsive Design */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
+    .table-card {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;
+        width: 95%;
+        max-width: 480px;
+        z-index: 1000;
+        padding: 30px 20px;
+    }
+    
+    .table-card.show {
+        display: block;
+    }
+
+    .close-btn {
+        display: block;
+    }
+    
+    .modal-backdrop.show {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+    }
+    
     .app-container {
         padding: 24px 20px;
         width: 95%;

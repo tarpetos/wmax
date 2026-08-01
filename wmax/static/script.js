@@ -143,16 +143,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const toggleTableBtn = document.getElementById("toggle-table-btn");
     const tableContainer = document.getElementById("reference-table-container");
+    const backdrop = document.getElementById("modal-backdrop");
+    const closeBtn = document.getElementById("close-table-btn");
 
-    if (toggleTableBtn && tableContainer) {
-        toggleTableBtn.addEventListener("click", () => {
-            tableContainer.classList.toggle("show");
-            if (tableContainer.classList.contains("show")) {
-                toggleTableBtn.querySelector("span").textContent = "Hide Reference Table";
-            } else {
-                toggleTableBtn.querySelector("span").textContent = "View Reference Table";
-            }
-        });
+    function toggleTable() {
+        if (tableContainer) tableContainer.classList.toggle("show");
+        if (backdrop) backdrop.classList.toggle("show");
+        
+        if (tableContainer && tableContainer.classList.contains("show")) {
+            toggleTableBtn.querySelector("span").textContent = "Hide Reference Table";
+        } else {
+            toggleTableBtn.querySelector("span").textContent = "View Reference Table";
+        }
+    }
+
+    if (toggleTableBtn) {
+        toggleTableBtn.addEventListener("click", toggleTable);
+    }
+    if (backdrop) {
+        backdrop.addEventListener("click", toggleTable);
+    }
+    if (closeBtn) {
+        closeBtn.addEventListener("click", toggleTable);
     }
 
     // Add listener to inputs to live update highlighting
