@@ -23,13 +23,14 @@ def calculate(request: CalculateRequest) -> CalculateResponse:
     """
     logger.info("Received request for 1RM calculation: {}", request)
     try:
-        maximum = calculate_1rm(weight=request.weight, reps=request.reps, mode=request.mode)
+        maximum = calculate_1rm(weight=request.weight, reps=request.reps, mode=request.mode, unit=request.unit)
         logger.info("Successfully calculated result: {}", maximum)
         return CalculateResponse(
             maximum=maximum,
             weight=request.weight,
             reps=request.reps,
             mode=request.mode,
+            unit=request.unit,
         )
     except ValueError as e:
         logger.warning("Data validation error: {}", e)

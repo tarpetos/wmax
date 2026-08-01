@@ -11,9 +11,10 @@ class CalculateRequest(BaseModel):
         mode (int): Muscle fiber mode (0=Power, 1=Average, 2=Endurance).
     """
 
-    weight: float = Field(..., ge=1, le=500, description="Weight lifted")
+    weight: float = Field(..., ge=1, le=1500, description="Weight lifted")
     reps: int = Field(..., ge=1, le=100, description="Repetitions performed")
     mode: int = Field(1, ge=0, le=2, description="Mode: 0=Power, 1=Average, 2=Endurance")
+    unit: str = Field("kg", description="Unit: kg or lbs")
 
 
 class CalculateResponse(BaseModel):
@@ -31,3 +32,4 @@ class CalculateResponse(BaseModel):
     weight: float
     reps: int
     mode: int
+    unit: str

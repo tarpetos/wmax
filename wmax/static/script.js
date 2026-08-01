@@ -41,12 +41,15 @@ document.addEventListener("DOMContentLoaded", () => {
         errorBox.classList.remove("show");
 
         try {
+            const unitSelect = document.getElementById("weight-unit");
+            const unit = unitSelect ? unitSelect.value : "kg";
+
             const response = await fetch("/api/calculate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ weight, reps, mode })
+                body: JSON.stringify({ weight, reps, mode, unit })
             });
 
             if (!response.ok) {
@@ -106,6 +109,22 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     modeSelect.addEventListener("change", autoCalc);
+    
+    const unitSelect = document.getElementById("weight-unit");
+    const resultUnit = document.querySelector(".result-unit");
+    
+    if (unitSelect) {
+        unitSelect.addEventListener("change", () => {
+            if (unitSelect.value === "kg") {
+                resultUnit.setAttribute("data-i18n", "unitKg");
+                resultUnit.textContent = window.translations[currentLang].unitKg;
+            } else {
+                resultUnit.setAttribute("data-i18n", "unitLbs");
+                resultUnit.textContent = window.translations[currentLang].unitLbs;
+            }
+            autoCalc();
+        });
+    }
 
     const rates = [
         [1, 2, 3, 4, 6, 8, 10, 12, 18, 26, 30],

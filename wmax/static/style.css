@@ -306,12 +306,33 @@ input[type="number"]:focus, select:focus {
     background: rgba(0, 0, 0, 0.3);
 }
 
-.unit {
+.unit, .unit-select {
     position: absolute;
-    right: 16px;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     color: var(--text-secondary);
+    font-size: 16px;
     font-weight: 600;
+}
+
+.unit {
     pointer-events: none;
+}
+
+.unit-select {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 5px;
+}
+
+.unit-select option {
+    background: #1e293b;
+    color: #fff;
 }
 
 select {

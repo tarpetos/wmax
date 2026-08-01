@@ -7,25 +7,27 @@ RATES = [
 ]
 
 
-def my_round(number: float) -> float:
+def my_round(number: float, unit: str = "kg") -> float:
     """
     Rounds the number according to custom rules:
-    - If >= 50, rounds to the nearest 2.5.
-    - If < 50, rounds to the nearest 1.
+    - If >= 50kg (or 110lbs), rounds to the nearest 2.5.
+    - If < 50kg, rounds to the nearest 1.
     """
-    if number >= 50.0:
+    threshold = 50.0 if unit == "kg" else 110.0
+    if number >= threshold:
         return 2.5 * round(number / 2.5)
     return 1.0 * round(number / 1.0)
 
 
-def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
+def calculate_1rm(weight: float, reps: int, mode: int = 1, unit: str = "kg") -> float:
     """
     Calculates the One Repetition Maximum (1RM).
 
     Args:
-        weight (float): Lifted weight in kilograms.
+        weight (float): Lifted weight.
         reps (int): Number of repetitions.
         mode (int): Muscle fiber mode (0 = Power, 1 = Average, 2 = Endurance).
+        unit (str): Unit of weight ('kg' or 'lbs').
 
     Returns:
         float: The calculated 1RM.
@@ -33,10 +35,12 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
     Raises:
         ValueError: If the input data is invalid.
     """
-    logger.debug("1RM calculation started: weight={}, reps={}, mode={}", weight, reps, mode)
-    if weight < 1 or weight > 500:
+    logger.debug("1RM calculation started: weight={}, reps={}, mode={}, unit={}", weight, reps, mode, unit)
+    if weight < 1 or weight > 1500:
         logger.error("Invalid weight provided: {}", weight)
-        raise ValueError("Weight must be between 1 and 500 kg")
+        raise ValueError("Weight must be between 1 and 1500")
+    if unit not in ("kg", "lbs"):
+        raise ValueError("Unit must be kg or lbs")
     if reps < 1 or reps > 100:
         logger.error("Invalid repetitions provided: {}", reps)
         raise ValueError("Reps must be between 1 and 100")
@@ -53,6 +57,6 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
 
     percent = 100 - (found_i - 1) * 5
 
-    maximum = my_round(weight / (percent / 100.0))
+    maximum = my_round(weight / (percent / 100.0), unit)
     logger.info("Calculation complete. Maximum: {}", maximum)
     return maximum
