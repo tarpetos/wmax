@@ -1,9 +1,11 @@
 import argparse
 import os
+import signal
 import sys
 import threading
 import time
 import webbrowser
+from contextlib import suppress
 
 if sys.stdout is None:
     sys.stdout = open(os.devnull, "w")  # noqa: SIM115
@@ -30,6 +32,10 @@ def can_use_tray(server_mode: bool) -> bool:
     if sys.platform.startswith("linux"):
         if not os.environ.get("DISPLAY") and not os.environ.get("WAYLAND_DISPLAY"):
             return False
+        with suppress(Exception), open("/proc/version") as f:
+            content = f.read().lower()
+            if "microsoft" in content or "wsl" in content:
+                return False
     return True
 
 
@@ -77,7 +83,12 @@ def main() -> None:
             pystray.MenuItem("Exit", exit_app),
         )
         icon = pystray.Icon("wmax", image, "WMAX Server", menu)
-        icon.run()
+        signal.signal(signal.SIGINT, lambda _s, _f: os._exit(0))
+        try:
+            icon.run()
+        except Exception as e:
+            logger.error("Tray icon failed: {}", e)
+            os._exit(1)
     else:
         # In server mode or headless linux, we just run the server and DO NOT open a browser
         uvicorn_config = uvicorn.Config(app, host=args.host, port=args.port, log_config=None, access_log=False)
