@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Animate number
             let start = 0;
             const end = data.maximum;
-            const duration = 1000;
+            const duration = 600;
             const startTime = performance.now();
 
             resultBox.classList.add("show");
@@ -71,13 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Easing out cubic
                 const easeOut = 1 - Math.pow(1 - progress, 3);
                 
-                const currentVal = Math.round(start + (end - start) * easeOut);
-                maxResult.textContent = currentVal;
+                const currentVal = start + (end - start) * easeOut;
+                const hasDecimal = end % 1 !== 0;
+                
+                if (hasDecimal) {
+                    maxResult.textContent = currentVal.toFixed(1);
+                } else {
+                    maxResult.textContent = Math.round(currentVal);
+                }
 
                 if (progress < 1) {
                     requestAnimationFrame(updateNumber);
                 } else {
-                    maxResult.textContent = end;
+                    maxResult.textContent = hasDecimal ? end.toFixed(1) : end;
                 }
             }
 

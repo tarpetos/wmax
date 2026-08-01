@@ -375,12 +375,12 @@ select option {
     text-align: center;
     opacity: 0;
     transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: none;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .result-box.show {
-    display: block;
+    visibility: visible;
     opacity: 1;
     transform: translateY(0);
 }
@@ -547,7 +547,13 @@ select option {
     }
     
     .table-card.show {
-        display: block;
+        display: flex;
+        animation: fadeInMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeInMobile {
+        from { opacity: 0; top: 52%; }
+        to { opacity: 1; top: 50%; }
     }
 
     .close-btn {
