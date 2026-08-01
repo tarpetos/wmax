@@ -24,6 +24,6 @@ def test_main_run() -> None:
     with patch("sys.argv", ["main"]):
         import main
         main.HAS_PYSTRAY = False
-        with patch("main.uvicorn.run") as mock_run:
+        with patch("main.uvicorn.Server.run") as mock_run:
             main.main()
             mock_run.assert_called_once()
