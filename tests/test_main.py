@@ -4,9 +4,7 @@ from unittest.mock import patch
 
 
 def test_main_pyinstaller_path() -> None:
-    with patch.object(sys, "frozen", True, create=True), patch.object(
-        sys, "_MEIPASS", "/tmp/mocked", create=True
-    ):
+    with patch.object(sys, "frozen", True, create=True), patch.object(sys, "_MEIPASS", "/tmp/mocked", create=True):
         import importlib
 
         import wmax.main

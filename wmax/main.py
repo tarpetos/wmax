@@ -29,21 +29,22 @@ app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 @app.get("/")
 def read_index() -> FileResponse:
     """
-    Возвращает главную страницу веб-интерфейса.
+    Returns the main page of the web application.
 
     Returns:
-        FileResponse: Статический HTML-файл.
+        FileResponse: Static HTML file.
     """
-    logger.info("Запрошена главная страница")
+    logger.info("Main page requested")
     return FileResponse(str(static_dir / "index.html"))
 
 
 def main() -> None:
     """
-    Запускает веб-сервер Uvicorn для приложения.
+    Starts the Uvicorn web server for the application.
     """
-    logger.info("Сервер запускается на http://127.0.0.1:8000")
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    port = 8372
+    logger.info("Server starting on http://127.0.0.1:%d", port)
+    uvicorn.run(app, host="127.0.0.1", port=port)
 
 
 if __name__ == "__main__":

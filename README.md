@@ -26,12 +26,12 @@ The project uses `uv` for lightning-fast dependency management.
    ```bash
    uv run python -m wmax.main
    ```
-4. **Visit**: `http://127.0.0.1:8000`
+4. **Visit**: `http://127.0.0.1:8372`
 
 ### Running the Executable
 
 Simply head over to the [Releases](../../releases) page and download the executable for your platform.
-Double-click it (or run it from the terminal), and it will automatically spawn a local web server at `http://127.0.0.1:8000`.
+Double-click it (or run it from the terminal), and it will automatically spawn a local web server at `http://127.0.0.1:8372`.
 
 ## Architecture & Best Practices
 

@@ -11,30 +11,28 @@ RATES = [
 
 def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
     """
-    Рассчитывает одноповторный максимум (1ПМ).
+    Calculates the One Repetition Maximum (1RM).
 
     Args:
-        weight (float): Поднятый вес в килограммах.
-        reps (int): Количество повторений.
-        mode (int): Режим мышечных волокон (0 = Сила, 1 = Баланс, 2 = Выносливость).
+        weight (float): Lifted weight in kilograms.
+        reps (int): Number of repetitions.
+        mode (int): Muscle fiber mode (0 = Power, 1 = Average, 2 = Endurance).
 
     Returns:
-        float: Рассчитанный 1ПМ.
+        float: The calculated 1RM.
 
     Raises:
-        ValueError: Если входные данные некорректны.
+        ValueError: If the input data is invalid.
     """
-    logger.debug(
-        "Расчет 1ПМ начат: вес=%s, повторения=%s, режим=%s", weight, reps, mode
-    )
+    logger.debug("1RM calculation started: weight=%s, reps=%s, mode=%s", weight, reps, mode)
     if weight < 1 or weight > 500:
-        logger.error("Указан неверный вес: %s", weight)
+        logger.error("Invalid weight provided: %s", weight)
         raise ValueError("Weight must be between 1 and 500 kg")
     if reps < 1 or reps > 100:
-        logger.error("Указано неверное количество повторений: %s", reps)
+        logger.error("Invalid repetitions provided: %s", reps)
         raise ValueError("Reps must be between 1 and 100")
     if mode not in (0, 1, 2):
-        logger.error("Указан неверный режим: %s", mode)
+        logger.error("Invalid mode provided: %s", mode)
         raise ValueError("Mode must be 0 (Power), 1 (Average), or 2 (Endurance)")
 
     mode_rates = RATES[mode]
@@ -47,5 +45,5 @@ def calculate_1rm(weight: float, reps: int, mode: int = 1) -> float:
     percent = 100 - (found_i - 1) * 5
 
     maximum = round(weight / (percent / 100.0))
-    logger.info("Расчет завершен. Максимум: %s", maximum)
+    logger.info("Calculation complete. Maximum: %s", maximum)
     return float(maximum)
