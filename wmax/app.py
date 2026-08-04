@@ -42,3 +42,8 @@ def read_index() -> FileResponse:
     """
     logger.info("Main page requested")
     return FileResponse(str(static_dir / "index.html"))
+
+def main():
+    """Entry point for BeeWare/Briefcase."""
+    from wmax.mobile import main as mobile_main
+    return mobile_main()

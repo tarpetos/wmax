@@ -6,11 +6,13 @@ readme = "README.md"
 authors = [{ name = "tarpetos", email = "hevlichtaras@gmail.com" }]
 requires-python = ">=3.13, <3.14"
 dependencies = [
+    "briefcase>=0.4.4",
     "fastapi==0.141.1",
     "loguru==0.7.3",
-    "pillow==12.3.0",
+    "pillow==11.0.0",
     "pydantic==2.13.4",
     "pystray==0.19.5",
+    "toga>=0.5.6",
     "uvicorn==0.52.0",
 ]
 
@@ -86,3 +88,24 @@ max-line-length = 120
 
 [tool.ruff.format]
 quote-style = "double"
+
+[tool.briefcase]
+project_name = "WMAX"
+bundle = "com.tarpetos"
+version = "0.2.5"
+url = "https://github.com/tarpetos/wmax"
+license = "MIT"
+license-files = ["LICENSE"]
+author = "tarpetos"
+author_email = "hevlichtaras@gmail.com"
+
+[tool.briefcase.app.wmax]
+formal_name = "WMAX"
+description = "One Rep Max (1RM) calculator with a glassmorphism web UI"
+icon = "assets/wmax"
+sources = ["wmax"]
+requires = ["fastapi==0.141.1", "loguru==0.7.3", "uvicorn==0.52.0", "pydantic==2.13.4", "toga==0.5.6"]
+
+[tool.briefcase.app.wmax.android]
+requires = ["toga-android==0.5.6"]
+build_gradle_dependencies = []
