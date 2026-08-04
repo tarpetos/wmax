@@ -71,20 +71,36 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             isCalculating = true;
 
-            const response = await fetch("/api/calculate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ weight, reps, mode, unit })
-            });
-
-            if (!response.ok) {
-                const errData = await response.json();
-                throw new Error(errData.detail || "Failed to calculate.");
+            function myRound(number, unitStr) {
+                const mul = UNIT_MULTIPLIERS[unitStr] || 1.0;
+                const threshold = 50.0 * mul;
+                if (number >= threshold) {
+                    return 2.5 * Math.round(number / 2.5);
+                }
+                return 1.0 * Math.round(number / 1.0);
             }
 
-            const data = await response.json();
+            const ratesMode = [
+                [1, 2, 3, 4, 6, 8, 10, 12, 18, 26, 30],
+                [1, 2, 4, 6, 8, 10, 12, 18, 26, 30, 38],
+                [1, 2, 4, 8, 10, 12, 18, 26, 30, 38, 50],
+            ];
+            let found_i = ratesMode[mode].length;
+            for (let i = 0; i < ratesMode[mode].length; i++) {
+                if (ratesMode[mode][i] > reps) {
+                    found_i = i;
+                    break;
+                }
+            }
+            const percent = 100 - (found_i - 1) * 5;
+            const raw_maximum = weight / (percent / 100.0);
+            
+            const maximum = myRound(raw_maximum, unit);
+            const altUnit = unit === "kg" ? "lbs" : "kg";
+            const altWeight = unit === "kg" ? raw_maximum * 2.20462262 : raw_maximum / 2.20462262;
+            const maximum_alt = myRound(altWeight, altUnit);
+
+            const data = { maximum, maximum_alt };
             
             // Animate number
             let start = 0;
@@ -144,28 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const autoCalc = debounce(performCalculation, 300);
 
-    const exitServerBtn = document.getElementById("exit-server-btn");
-    if (exitServerBtn) {
-        fetch("/api/config")
-            .then(res => res.json())
-            .then(config => {
-                if (config.server_mode) {
-                    exitServerBtn.style.display = "none";
-                }
-            })
-            .catch(e => console.error("Could not load config", e));
-
-        exitServerBtn.addEventListener("click", async () => {
-            if (confirm("Are you sure you want to stop the server and exit the application?")) {
-                try {
-                    await fetch("/api/quit", { method: "POST" });
-                } catch (e) {
-                    console.error("Failed to shutdown gracefully", e);
-                }
-                document.body.innerHTML = "<h2 style='text-align: center; margin-top: 20%; color: white;'>Server stopped. You can close this tab.</h2>";
-            }
-        });
-    }
 
     weightInput.addEventListener("input", autoCalc);
     repsInput.addEventListener("input", autoCalc);
