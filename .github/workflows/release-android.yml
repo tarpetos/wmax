@@ -40,7 +40,7 @@ jobs:
 
       - name: set NDK environment
         run: |
-          echo "NDK_HOME=$ANDROID_SDK_ROOT/ndk/27.0.12077973" >> $GITHUB_ENV
+          echo "NDK_HOME=$ANDROID_NDK_HOME" >> $GITHUB_ENV
 
       - name: install NPM dependencies
         run: npm install
@@ -51,15 +51,21 @@ jobs:
       - name: build tauri android
         run: npm run tauri android build -- --apk
       
-      - name: Upload Android APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: wmax-android-apk
-          path: src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk
+      - name: Sign and Rename APK
+        run: |
+          # Generate a temporary keystore
+          keytool -genkey -v -keystore release.keystore -alias androidkey -keyalg RSA -keysize 2048 -validity 10000 -dname "C=US, O=WMAX, CN=WMAX Release" -storepass android -keypass android
+          
+          # Sign the unsigned APK
+          APKSIGNER=$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)
+          $APKSIGNER sign --ks release.keystore --ks-pass pass:android --key-pass pass:android src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk
+          
+          mkdir -p release_assets
+          cp src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk release_assets/wmax-android.apk
 
       - name: Release APK
         uses: softprops/action-gh-release@v1
         with:
-          files: src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release.apk
+          files: release_assets/wmax-android.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
