@@ -1,6 +1,6 @@
 {
   "name": "wmax",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "WMAX is a highly specialized web application and standalone utility for calculating your One Repetition Maximum (1RM). It's built with modern web aesthetics in mind, featuring glassmorphism and an animated design, backed by a robust, fully-tested FastAPI core.",
   "main": "index.js",
   "scripts": {
@@ -21,5 +21,8 @@
   "homepage": "https://github.com/tarpetos/wmax#readme",
   "devDependencies": {
     "@tauri-apps/cli": "^2.11.4"
+  },
+  "dependencies": {
+    "flag-icons": "^7.5.0"
   }
 }

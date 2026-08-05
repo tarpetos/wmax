@@ -48,6 +48,10 @@ jobs:
       - name: Init Android
         run: npm run tauri android init
 
+      - name: Inject Custom Android Icons
+        run: |
+          cp -r src-tauri/icons/android/* src-tauri/gen/android/app/src/main/res/
+
       - name: build tauri android
         run: npm run tauri android build -- --apk
       

@@ -7,15 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxResult = document.getElementById("max-result");
     const errorBox = document.getElementById("error-box");
 
-    let errorTimeout;
     function showError(msg) {
         errorBox.textContent = msg;
         errorBox.classList.add("show");
         resultBox.classList.remove("show");
-        clearTimeout(errorTimeout);
-        errorTimeout = setTimeout(() => {
-            errorBox.classList.remove("show");
-        }, 5000);
     }
 
     const unitToggle = document.getElementById("unit-toggle");
@@ -301,6 +296,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const langCodeSpan = document.getElementById('lang-code');
         const langFlagSpan = document.getElementById('lang-flag');
 
+        const displayCodes = { en: 'EN', uk: 'UA', ru: 'RU', es: 'ES', fr: 'FR', de: 'DE', zh: 'CN', ja: 'JP', ko: 'KR', it: 'IT', pt: 'PT', ar: 'AR', hi: 'IN', bn: 'BD', tr: 'TR', pl: 'PL', nl: 'NL', vi: 'VN', th: 'TH', id: 'ID' };
+
         // Detect user locale
         const userLocale = navigator.language || navigator.userLanguage;
         let detectedLang = userLocale.split('-')[0].toLowerCase();
@@ -316,11 +313,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Update button UI
         const activeLi = langDropdown.querySelector(`li[data-lang="${detectedLang}"]`);
         if (activeLi) {
-            const flagSpan = activeLi.querySelector('.fi');
-            if (flagSpan) {
-                document.getElementById('lang-flag').className = flagSpan.className;
+            const flagImg = activeLi.querySelector('.flag-icon');
+            if (flagImg) {
+                langFlagSpan.src = flagImg.src;
             }
-            langCodeSpan.textContent = detectedLang.toUpperCase();
+            langCodeSpan.textContent = displayCodes[detectedLang] || detectedLang.toUpperCase();
         }
 
         // Dropdown interactions
@@ -338,11 +335,11 @@ document.addEventListener("DOMContentLoaded", () => {
         langDropdown.querySelectorAll('li').forEach(li => {
             li.addEventListener('click', () => {
                 const lang = li.getAttribute('data-lang');
-                const flagSpan = li.querySelector('.fi');
-                if (flagSpan) {
-                    document.getElementById('lang-flag').className = flagSpan.className;
+                const flagImg = li.querySelector('.flag-icon');
+                if (flagImg) {
+                    langFlagSpan.src = flagImg.src;
                 }
-                langCodeSpan.textContent = lang.toUpperCase();
+                langCodeSpan.textContent = displayCodes[lang] || lang.toUpperCase();
                 langDropdown.classList.remove('show');
                 setLanguage(lang);
             });
@@ -353,78 +350,3 @@ document.addEventListener("DOMContentLoaded", () => {
     performCalculation();
 });
 
-// --- Blob Physics Background ---
-document.addEventListener('DOMContentLoaded', () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    const r = 300;
-    
-    // Spawn somewhat randomly across the screen, offset by radius so they can appear partially offscreen safely
-    const rx = () => (Math.random() * w) - (r * 0.5);
-    const ry = () => (Math.random() * h) - (r * 0.5);
-
-    const blobs = [
-        { el: document.querySelector('.blob-1'), x: rx(), y: ry(), vx: 0.2, vy: 0.15, radius: r },
-        { el: document.querySelector('.blob-2'), x: rx(), y: ry(), vx: -0.15, vy: 0.2, radius: r },
-        { el: document.querySelector('.blob-3'), x: rx(), y: ry(), vx: -0.2, vy: -0.15, radius: r }
-    ];
-
-    function update() {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-
-        for (let i = 0; i < blobs.length; i++) {
-            let b = blobs[i];
-            b.x += b.vx;
-            b.y += b.vy;
-
-            // Bounce off walls 
-            if (b.x < -b.radius * 0.5) { b.x = -b.radius * 0.5; b.vx *= -1; }
-            if (b.x > w - b.radius * 1.5) { b.x = w - b.radius * 1.5; b.vx *= -1; }
-            if (b.y < -b.radius * 0.5) { b.y = -b.radius * 0.5; b.vy *= -1; }
-            if (b.y > h - b.radius * 1.5) { b.y = h - b.radius * 1.5; b.vy *= -1; }
-
-            if(b.el) b.el.style.transform = `translate(${b.x}px, ${b.y}px)`;
-        }
-
-        // Check collisions between blobs
-        for (let i = 0; i < blobs.length; i++) {
-            for (let j = i + 1; j < blobs.length; j++) {
-                let b1 = blobs[i];
-                let b2 = blobs[j];
-                
-                let cx1 = b1.x + b1.radius;
-                let cy1 = b1.y + b1.radius;
-                let cx2 = b2.x + b2.radius;
-                let cy2 = b2.y + b2.radius;
-
-                let dx = cx2 - cx1;
-                let dy = cy2 - cy1;
-                let dist = Math.sqrt(dx * dx + dy * dy);
-                
-                // Use a slightly smaller collision radius so they overlap beautifully before bouncing
-                let minDist = (b1.radius + b2.radius) * 0.6; 
-                
-                if (dist < minDist && dist > 0) {
-                    let nx = dx / dist;
-                    let ny = dy / dist;
-                    let dvx = b1.vx - b2.vx;
-                    let dvy = b1.vy - b2.vy;
-                    let velAlongNormal = dvx * nx + dvy * ny;
-                    
-                    if (velAlongNormal > 0) {
-                        let impulse = 2 * velAlongNormal / 2; 
-                        b1.vx -= impulse * nx;
-                        b1.vy -= impulse * ny;
-                        b2.vx += impulse * nx;
-                        b2.vy += impulse * ny;
-                    }
-                }
-            }
-        }
-        requestAnimationFrame(update);
-    }
-    
-    // Slight delay to ensure DOM is fully laid out
-    setTimeout(update, 100);
-});

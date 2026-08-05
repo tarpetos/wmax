@@ -65,6 +65,10 @@ jobs:
             ext="${file##*.}"
             cp "$file" "release_assets/wmax-${{ matrix.arch }}.$ext"
           done
+          # Copy raw binary for Linux to avoid AppImage bundling issues on Arch
+          if [ "${{ matrix.platform }}" == "ubuntu-22.04" ]; then
+            cp src-tauri/target/release/wmax release_assets/wmax-${{ matrix.arch }}
+          fi
         
       - name: Rename and Upload Artifacts (Windows)
         if: matrix.platform == 'windows-latest'
